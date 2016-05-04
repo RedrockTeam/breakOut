@@ -24,6 +24,4 @@ $(document).ready(() => {
         window.location.href = "./game.html";
     });
     /* 这里也可以设置 touchmove 的 flag 什么的 */
-
-
 });
