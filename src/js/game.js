@@ -44,7 +44,7 @@ $(document).ready(() => {
         }
 
         up (starTop) {
-            this.upFlag = (ballTop < this.upPosLow);
+            this.upFlag = (starTop < this.upPosLow);
             /* 判断星星位置,是否向上走 */
 
             if (this.upFlag) {
@@ -64,11 +64,24 @@ $(document).ready(() => {
 
         run () {
             pub.timer = setInterval(() => {
+                stage.refresh();
+                stage.up(star.getPos()[1]);
+
+                barrier_one_left.move();
+                barrier_one_right.move();
+                star.collision(barrier_one_left.top, barrier_one_right.isClose);
+
                 /*
                 *   运行整个游戏
                 *   里面的函数根据实际情况写
                 * */
+
+                star.fall();
             }, 1000/60);
+
+            $(document).on('touchstart', function () {
+                star.jump();
+            });
         }
     }
     /*
@@ -107,7 +120,7 @@ $(document).ready(() => {
         }
 
         isEnd () {
-            if (this.top > pub.playgroundHeight) {
+            if (this.top > window.innerHeight) {
                 console.log("Fall down game over");
                 pub.stopTimer();
             }
@@ -303,11 +316,11 @@ $(document).ready(() => {
             this.context.drawImage(this.img, this.left, this.top);
         }
 
-        eat (ballY) {
+        eat (starY) {
             var centerY = this.top + this.height / 2;
             console.log(centerY);
 
-            if (Math.abs(centerY - ballY) < 5) {
+            if (Math.abs(centerY - starY) < 5) {
                 this.isAte = true;
             }
 
@@ -330,12 +343,26 @@ $(document).ready(() => {
             this.width = width;
             this.height = height;
             this.img = img;
+
+            this.scale = 1;
         }
 
         paint () {
-            this.context.drawImage(this.img, this.left, this.top);
+            this.context.clearRect(this.left, this.top, this.width, this.height);
+
+            //this.context.save();
+            //this.context.scale(this.scale, this.scale);
+            ////this.context.translate(this.left, this.top);
+            //this.context.drawImage(this.img, this.left, this.top);
+            //this.context.restore();
         }
 
+        blink () {
+            let max = 1.5;
+            let min = 1;
+
+            this.paint();
+        }
         /* 应该还有点动画效果 */
     }
     /*
@@ -344,4 +371,35 @@ $(document).ready(() => {
     *   沿路的路标 下面的小手啥的
     * */
 
+    const imgStar = document.querySelector("#img-star");
+    const imgRope = document.querySelector("#img-rope");
+    const imgTouch = document.querySelector("#img-touch");
+    const winHeight = window.innerHeight;
+
+    const stage = new Stage();
+    const touch = new Sign(145, winHeight - 280, 40, 60, imgTouch);
+    const star = new Star(winHeight - 150, 145, 30, 30, imgStar);
+    const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[105, 120]]);
+    const barrier_one_right = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+
+    stage.refresh();
+    window.setTimeout(() => {
+        barrier_one_left.paint();
+        barrier_one_right.paint();
+        star.paint();
+        touch.paint();
+    }, 200);
+
+    window.setInterval(function () {
+        touch.blink();
+    }, 200);
+    /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
+
+    $("#container").on("touchstart", function () {
+        if (pub.run === false) {
+            stage.run();
+            pub.run = true;
+            pub.isStart = true;
+        }
+    });
 });
