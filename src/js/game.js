@@ -8,12 +8,13 @@ $(document).ready(() => {
     }
     /* 如果屏幕比预设值高, 那么更改 canvas 的高度 */
 
-    const pub = {
+    let pub = {
         canvas: document.querySelector("#canvas"),
         context: document.querySelector("#canvas").getContext("2d"),
         timer: null,
         run: false,
         isStart: false,
+        touchTimer: null,
         stopTimer () {
             window.clearInterval(this.timer);
         }
@@ -76,6 +77,7 @@ $(document).ready(() => {
                 *   里面的函数根据实际情况写
                 * */
 
+                touch.blink();
                 star.fall();
             }, 1000/60);
 
@@ -345,25 +347,31 @@ $(document).ready(() => {
             this.img = img;
 
             this.scale = 1;
+            this.flag = false;
         }
 
         paint () {
-            this.context.clearRect(this.left, this.top, this.width, this.height);
-
-            //this.context.save();
-            //this.context.scale(this.scale, this.scale);
-            ////this.context.translate(this.left, this.top);
-            //this.context.drawImage(this.img, this.left, this.top);
-            //this.context.restore();
+            this.context.drawImage(this.img, this.left, this.top);
         }
 
         blink () {
-            let max = 1.5;
-            let min = 1;
 
-            this.paint();
+            if (this.scale >= 1.3) {
+                this.flag = false;
+            }
+            if (this.scale <= 1) {
+                this.flag = true;
+            }
+            this.flag ? this.scale += 0.005 :  this.scale -= 0.005;
+            this.context.drawImage(this.img, this.left-(this.width * this.scale/2), this.top-(this.height * this.scale/2), this.width * this.scale, this.height * this.scale);
+
         }
-        /* 应该还有点动画效果 */
+
+        blinkErase () {
+            this.context.clearRect(0, this.top - 40, window.innerWidth, window.innerHeight);
+        }
+        /* blinkErase 在游戏开始前的闪烁 */
+
     }
     /*
     *   class Sign
@@ -377,7 +385,7 @@ $(document).ready(() => {
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
-    const touch = new Sign(145, winHeight - 280, 40, 60, imgTouch);
+    const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
     const star = new Star(winHeight - 150, 145, 30, 30, imgStar);
     const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[105, 120]]);
     const barrier_one_right = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
@@ -387,15 +395,20 @@ $(document).ready(() => {
         barrier_one_left.paint();
         barrier_one_right.paint();
         star.paint();
-        touch.paint();
     }, 200);
 
-    window.setInterval(function () {
+    pub.touchTimer = window.setInterval(function () {
+        touch.blinkErase();
         touch.blink();
-    }, 200);
+    }, 1000/60);
+
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
     $("#container").on("touchstart", function () {
+
+        window.clearInterval(pub.touchTimer);
+        /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+
         if (pub.run === false) {
             stage.run();
             pub.run = true;
