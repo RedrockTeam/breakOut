@@ -26,6 +26,16 @@ $(document).ready(() => {
      *   @pub.isStart 是否已经开始了（防止开始之前暂停）
      */
 
+    let gameController = [
+        'barrier_one_left.move()',
+        'barrier_one_right.move()',
+        'star.collision(barrier_one_left.top, barrier_one_right.isClose)',
+        'barrier_two_left.move()',
+        'barrier_two_right.move()',
+        'star.collision(barrier_two_left.top, barrier_two_right.isClose)',
+        'barrier_one_sign.paint()'
+    ];
+
     class Stage {
 
         constructor () {
@@ -68,13 +78,19 @@ $(document).ready(() => {
                 stage.refresh();
                 stage.up(star.getPos()[1]);
 
-                barrier_one_left.move();
-                barrier_one_right.move();
-                star.collision(barrier_one_left.top, barrier_one_right.isClose);
+                //barrier_one_left.move();
+                //barrier_one_right.move();
+                //star.collision(barrier_one_left.top, barrier_one_right.isClose);
+                //
+                //barrier_two_left.move();
+                //barrier_two_right.move();
+                //star.collision(barrier_two_left.top, barrier_two_right.isClose);
+
+                gameController.forEach(item => eval(item));
 
                 /*
                 *   运行整个游戏
-                *   里面的函数根据实际情况写
+                *   强行变成了 eval 23333
                 * */
 
                 touch.blink();
@@ -382,18 +398,29 @@ $(document).ready(() => {
     const imgStar = document.querySelector("#img-star");
     const imgRope = document.querySelector("#img-rope");
     const imgTouch = document.querySelector("#img-touch");
+    const imgT1 = document.querySelector("#img-title-1");
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
     const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
-    const star = new Star(winHeight - 150, 145, 30, 30, imgStar);
+    const star = new Star(winHeight - 180, 145, 30, 30, imgStar);
+
     const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[105, 120]]);
     const barrier_one_right = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
 
+    const barrier_one_sign = new Sign(110, winHeight - 350, 100, 13, imgT1);
+
+    const barrier_two_left = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[105, 120]]);
+    const barrier_two_right = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+
     stage.refresh();
+
     window.setTimeout(() => {
         barrier_one_left.paint();
         barrier_one_right.paint();
+        barrier_one_sign.paint();
+        barrier_two_left.paint();
+        barrier_two_right.paint();
         star.paint();
     }, 200);
 
@@ -405,7 +432,6 @@ $(document).ready(() => {
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
     $("#container").on("touchstart", function () {
-
         window.clearInterval(pub.touchTimer);
         /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
 
