@@ -33,7 +33,11 @@ $(document).ready(() => {
         'barrier_two_left.move()',
         'barrier_two_right.move()',
         'star.collision(barrier_two_left.top, barrier_two_right.isClose)',
-        'barrier_one_sign.paint()'
+        'barrier_one_sign.paint()',
+        'barrier_three.rotate()',
+        'barrier_two_sign.paint()',
+        'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status)',
+        'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status)'
     ];
 
     class Stage {
@@ -77,14 +81,6 @@ $(document).ready(() => {
             pub.timer = setInterval(() => {
                 stage.refresh();
                 stage.up(star.getPos()[1]);
-
-                //barrier_one_left.move();
-                //barrier_one_right.move();
-                //star.collision(barrier_one_left.top, barrier_one_right.isClose);
-                //
-                //barrier_two_left.move();
-                //barrier_two_right.move();
-                //star.collision(barrier_two_left.top, barrier_two_right.isClose);
 
                 gameController.forEach(item => eval(item));
 
@@ -194,12 +190,12 @@ $(document).ready(() => {
             this.initDegree = rotateDegree;
             this.testPoint = {
                 up: {
-                    y: this.start.y,
+                    y: this.start.y + 10,
                     zone: zoneUp,
                     status: true
                 },
                 down: {
-                    y: this.start.y + this.height,
+                    y: this.start.y - 10 + this.height,
                     zone: zoneDown,
                     status: true
                 }
@@ -236,6 +232,8 @@ $(document).ready(() => {
                 this.rotateDeg = this.initDegree;
             }
             /* 转了一圈之后重新转/判断 */
+
+            //console.log(this.rotateDeg);
 
             let upCount = 0;
             let downCount = 0;
@@ -399,19 +397,24 @@ $(document).ready(() => {
     const imgRope = document.querySelector("#img-rope");
     const imgTouch = document.querySelector("#img-touch");
     const imgT1 = document.querySelector("#img-title-1");
+    const imgC1 = document.querySelector("#img-circle-1");
+    const imgT2 = document.querySelector("#img-title-2");
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
     const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
     const star = new Star(winHeight - 180, 145, 30, 30, imgStar);
 
-    const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[105, 120]]);
+    const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[105, 125]]);
     const barrier_one_right = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
-
     const barrier_one_sign = new Sign(110, winHeight - 350, 100, 13, imgT1);
-
-    const barrier_two_left = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[105, 120]]);
+    const barrier_two_left = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[105, 125]]);
     const barrier_two_right = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+    /* 第一关的五个东西 */
+
+    const barrier_three = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, [[0.7, 2.4]], [[3.9, 5.5]]);
+    const barrier_two_sign = new Sign(125, winHeight - 650, 80, 13, imgT2);
+    /* 第二关 一个圆 */
 
     stage.refresh();
 
@@ -421,6 +424,7 @@ $(document).ready(() => {
         barrier_one_sign.paint();
         barrier_two_left.paint();
         barrier_two_right.paint();
+        barrier_three.paint();
         star.paint();
     }, 200);
 
