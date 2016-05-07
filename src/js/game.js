@@ -1,7 +1,9 @@
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
 
-$(document).ready(() => {
+$(document).ready((e) => {
+
+    e.preventDefault();
 
     if (window.innerHeight > 568) {
         document.querySelector("#canvas").height = window.innerHeight;
@@ -15,6 +17,10 @@ $(document).ready(() => {
         run: false,
         isStart: false,
         touchTimer: null,
+        currentLevel: 0,
+        levelUp () {
+            this.currentLevel++;
+        },
         stopTimer () {
             window.clearInterval(this.timer);
         }
@@ -24,6 +30,9 @@ $(document).ready(() => {
      *   @pub.timer 刷新 canvas 的 interval
      *   @pub.run 游戏是否正在运行
      *   @pub.isStart 是否已经开始了（防止开始之前暂停）
+     *   @touchTimer 在整个屏幕没有开始刷新之前, 只对下面小手的区域地方刷新
+     *   @currentLevel 记录关卡
+     *   @levelUp 每次通过一个关卡就加 1
      */
 
     let gameController = [
