@@ -1,7 +1,7 @@
 /*
-*   16-5-7
-*   考虑把屏幕向上移动和星星跳的函数分开 否则看着有卡顿
-* */
+ *   16-5-7
+ *   关卡没写完 然后加载效果
+ * */
 
 
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
@@ -19,8 +19,8 @@ $(document).ready(() => {
     const $pause = $("#pause");
     $pause.on('touchstart', () => {
         /*
-        *   暂停按钮有很多坑 233
-        * */
+         *   暂停按钮有很多坑 233
+         * */
     });
 
 
@@ -65,18 +65,21 @@ $(document).ready(() => {
         }
     };
 
-    let contoller = {
+    let controller = {
         timer: null,
         startTime: null,
-        endTime: null
+        endTime: null,
+        stopTimer () {
+            window.clearInterval(this.timer);
+        }
     };
 
 
 
     /*
-    *   上面是关于游戏控制的一些奇怪东西
-    *   下面是游戏 canvas 中运行的一些东西
-    * */
+     *   上面是关于游戏控制的一些奇怪东西
+     *   下面是游戏 canvas 中运行的一些东西
+     * */
 
     let pub = {
         canvas: document.querySelector("#canvas"),
@@ -138,10 +141,10 @@ $(document).ready(() => {
 
     ];
     /*
-    *   gameController
-    *   二维数组, 第一维的每个元素代表关卡
-    *   整个游戏运行所依赖的函数, 运行的时候从这里面取来...eval
-    * */
+     *   gameController
+     *   二维数组, 第一维的每个元素代表关卡
+     *   整个游戏运行所依赖的函数, 运行的时候从这里面取来...eval
+     * */
 
     class Stage {
 
@@ -194,9 +197,9 @@ $(document).ready(() => {
                 }
 
                 /*
-                *   运行整个游戏
-                *   强行变成了 eval 23333
-                * */
+                 *   运行整个游戏
+                 *   强行变成了 eval 23333
+                 * */
 
                 star.fall();
 
@@ -206,9 +209,9 @@ $(document).ready(() => {
         }
     }
     /*
-    *   class Stage
-    *   运行整个游戏的舞台
-    * */
+     *   class Stage
+     *   运行整个游戏的舞台
+     * */
 
     class Star {
         constructor (top, left, width, height, img) {
@@ -244,21 +247,22 @@ $(document).ready(() => {
             if (this.top > window.innerHeight) {
                 console.log("Fall down game over");
                 pub.stopTimer();
+                controller.stopTimer();
             }
         }
         /*
-        *   isEnd
-        *   判断是否掉落出屏幕外
-        *   掉出去之后的动作待写
-        * */
+         *   isEnd
+         *   判断是否掉落出屏幕外
+         *   掉出去之后的动作待写
+         * */
 
         getPos () {
             return [this.left + this.width / 2, this.top + this.height / 2];
         }
         /*
-        *   getPos
-        *   获取星星中心点的坐标 [x, y]
-        * */
+         *   getPos
+         *   获取星星中心点的坐标 [x, y]
+         * */
 
         collision (posY, status) {
             let selfY = this.getPos()[1];
@@ -268,18 +272,19 @@ $(document).ready(() => {
                 console.log("game over");
 
                 pub.stopTimer();
+                controller.stopTimer();
             }
         }
         /*
-        *   collision
-        *   检测星星是否碰撞了
-        *   然后这里面也有一些碰撞之后的动作, 待写
-        * */
+         *   collision
+         *   检测星星是否碰撞了
+         *   然后这里面也有一些碰撞之后的动作, 待写
+         * */
     }
     /*
-    *   class Star
-    *   很跳的小星星
-    * */
+     *   class Star
+     *   很跳的小星星
+     * */
 
     class Circle {
         constructor (x, y, width, height, img, rotateDegree, zoneUp, zoneDown) {
@@ -309,12 +314,12 @@ $(document).ready(() => {
             }
         }
         /*
-        *   x, y 和上面星星的 top left 一个道理
-        *   rotateDeg 已经旋转角度
-        *   initDeg 初始旋转角度, 用在转了一圈之后重新开始转
-        *   testPoint 上下检测碰撞的点
-        *   zoneUp 和 zoneDown 传二维数组
-        * */
+         *   x, y 和上面星星的 top left 一个道理
+         *   rotateDeg 已经旋转角度
+         *   initDeg 初始旋转角度, 用在转了一圈之后重新开始转
+         *   testPoint 上下检测碰撞的点
+         *   zoneUp 和 zoneDown 传二维数组
+         * */
 
         paint () {
             this.context.save();
@@ -351,17 +356,17 @@ $(document).ready(() => {
             this.testPoint.up.status = !(upCount > 0);
             this.testPoint.down.status = !(downCount > 0);
             /*
-            *   upCount 判断圆上面的点是否在碰撞范围内
-            *   downCount 判断圆下面的点是否在碰撞范围内
-            * */
+             *   upCount 判断圆上面的点是否在碰撞范围内
+             *   downCount 判断圆下面的点是否在碰撞范围内
+             * */
 
             this.paint();
         }
     }
     /*
-    *   Circle
-    *   圆形的障碍物的构造函数
-    * */
+     *   Circle
+     *   圆形的障碍物的构造函数
+     * */
 
     class Block {
         constructor (left, top, width, height, img, direction, maxLeft, maxRight, zone) {
@@ -377,11 +382,11 @@ $(document).ready(() => {
             this.maxRight = maxRight;
             this.zone = zone;
             /*
-            *   top 方块左边距画布左边位置
-            *   left 方块顶端距画布顶端位置
-            *   direction 初始移动方向 true -> 向右移动
-            *   zone 空隙区域
-            * */
+             *   top 方块左边距画布左边位置
+             *   left 方块顶端距画布顶端位置
+             *   direction 初始移动方向 true -> 向右移动
+             *   zone 空隙区域
+             * */
 
             this.testPoint = this.top + this.height/2;
             this.isClose = true;
@@ -399,9 +404,9 @@ $(document).ready(() => {
             let center = this.left + this.width / 2;
             let count = 0;
             /*
-            *   center 图形的中心点
-            *   count 判断碰撞的标记
-            * */
+             *   center 图形的中心点
+             *   count 判断碰撞的标记
+             * */
 
             //this.context.clearRect(this.left, this.top, this.width, this.height);
 
@@ -496,10 +501,10 @@ $(document).ready(() => {
 
     }
     /*
-    *   class Sign
-    *   标志的构造函数
-    *   沿路的路标 下面的小手啥的
-    * */
+     *   class Sign
+     *   标志的构造函数
+     *   沿路的路标 下面的小手啥的
+     * */
 
     const imgStar = document.querySelector("#img-star");
     const imgRope = document.querySelector("#img-rope");
@@ -550,7 +555,7 @@ $(document).ready(() => {
             window.clearInterval(pub.touchTimer);
             /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
 
-            contoller.timer = window.setInterval(() => {
+            controller.timer = window.setInterval(() => {
                 gameTimer.run();
                 $gameTimer.text(gameTimer.getTime());
             }, 50);
