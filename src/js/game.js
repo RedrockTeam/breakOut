@@ -1,9 +1,11 @@
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
 
-$(document).ready((e) => {
+$(document).ready(() => {
 
-    e.preventDefault();
+    //$(document).on('click', e => e.preventDefault());
+    $(document).on('touchstart', e => e.preventDefault());
+
 
     if (window.innerHeight > 568) {
         document.querySelector("#canvas").height = window.innerHeight;
@@ -36,17 +38,18 @@ $(document).ready((e) => {
      */
 
     let gameController = [
+        'barrier_one_sign.paint()',
+        'barrier_two_sign.paint()',
         'barrier_one_left.move()',
         'barrier_one_right.move()',
-        'star.collision(barrier_one_left.top, barrier_one_left.isClose)',
         'barrier_two_left.move()',
         'barrier_two_right.move()',
-        'star.collision(barrier_two_left.top, barrier_two_left.isClose)',
-        'barrier_one_sign.paint()',
         'barrier_three.rotate()',
-        'barrier_two_sign.paint()',
+        'star.collision(barrier_two_left.testPoint, barrier_two_left.isClose)',
+        'star.collision(barrier_one_left.testPoint, barrier_one_left.isClose)',
         'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status)',
-        'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status)'
+        'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status)',
+        'touch.blink()'
     ];
 
     class Stage {
@@ -98,13 +101,9 @@ $(document).ready((e) => {
                 *   强行变成了 eval 23333
                 * */
 
-                touch.blink();
                 star.fall();
-            }, 1000/60);
+            }, 100/6);
 
-            $(document).on('touchstart', function () {
-                star.jump();
-            });
         }
     }
     /*
@@ -131,12 +130,12 @@ $(document).ready((e) => {
         }
 
         jump () {
-            this.exp = -8;
+            this.exp = -4;
         }
 
         fall () {
             this.top += this.exp;
-            this.exp += .3;
+            this.exp += .2;
             /* 模拟匀加速直线运动相同时间内 1 3 5... */
             this.paint();
             this.isEnd();
@@ -230,7 +229,7 @@ $(document).ready((e) => {
             this.context.save();
             this.context.translate(this.start.x + .5 * this.width, this.start.y + .5 * this.height);
             this.context.rotate(this.rotateDeg);
-            this.context.clearRect(-.5 * this.width, -.5 *this.height, this.width, this.height);
+            //this.context.clearRect(-.5 * this.width, -.5 *this.height, this.width, this.height);
             this.context.restore();
             /* 通过改变画布的相对位置来进行重绘 */
 
@@ -285,6 +284,7 @@ $(document).ready((e) => {
             *   zone 空隙区域
             * */
 
+            this.testPoint = this.top + this.height/2;
             this.isClose = true;
             /* isClose 能否碰撞 */
 
@@ -304,7 +304,7 @@ $(document).ready((e) => {
             *   count 判断碰撞的标记
             * */
 
-            this.context.clearRect(this.left, this.top, this.width, this.height);
+            //this.context.clearRect(this.left, this.top, this.width, this.height);
 
             this.zone.map(item => count +=  (center >= item[0] && center <= item[1]));
             this.isClose = (count > 0);
@@ -314,7 +314,7 @@ $(document).ready((e) => {
                 this.direction = !this.direction;
             }
 
-            this.direction ? this.left += 1 : this.left -= 1;
+            this.direction ? this.left += 2 : this.left -= 2;
             /* 这里的 1 可以改变用来改变速度 越大越快 */
 
             this.paint();
@@ -445,8 +445,13 @@ $(document).ready((e) => {
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
     $("#container").on("touchstart", function () {
+
         window.clearInterval(pub.touchTimer);
         /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+
+        $(document).on('touchstart', function () {
+            star.jump();
+        });
 
         if (pub.run === false) {
             stage.run();
