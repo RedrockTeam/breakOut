@@ -29,10 +29,10 @@ $(document).ready(() => {
     let gameController = [
         'barrier_one_left.move()',
         'barrier_one_right.move()',
-        'star.collision(barrier_one_left.top, barrier_one_right.isClose)',
+        'star.collision(barrier_one_left.top, barrier_one_left.isClose)',
         'barrier_two_left.move()',
         'barrier_two_right.move()',
-        'star.collision(barrier_two_left.top, barrier_two_right.isClose)',
+        'star.collision(barrier_two_left.top, barrier_two_left.isClose)',
         'barrier_one_sign.paint()',
         'barrier_three.rotate()',
         'barrier_two_sign.paint()',
@@ -122,12 +122,12 @@ $(document).ready(() => {
         }
 
         jump () {
-            this.exp = -5;
+            this.exp = -8;
         }
 
         fall () {
             this.top += this.exp;
-            this.exp += .2;
+            this.exp += .3;
             /* 模拟匀加速直线运动相同时间内 1 3 5... */
             this.paint();
             this.isEnd();
@@ -405,10 +405,10 @@ $(document).ready(() => {
     const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
     const star = new Star(winHeight - 180, 145, 30, 30, imgStar);
 
-    const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[105, 125]]);
+    const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
     const barrier_one_right = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
     const barrier_one_sign = new Sign(110, winHeight - 350, 100, 13, imgT1);
-    const barrier_two_left = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[105, 125]]);
+    const barrier_two_left = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
     const barrier_two_right = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
     /* 第一关的五个东西 */
 
