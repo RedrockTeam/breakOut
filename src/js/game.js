@@ -1,3 +1,9 @@
+/*
+*   16-5-7
+*   考虑把屏幕向上移动和星星跳的函数分开 否则看着有卡顿
+* */
+
+
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
 
@@ -39,6 +45,9 @@ $(document).ready(() => {
         getTime () {
             var str = '';
 
+            if (this.minute < 10) {
+                str += '0';
+            }
             str += this.minute;
             str += " : ";
             if (this.second < 10) {
@@ -157,12 +166,12 @@ $(document).ready(() => {
             /* 判断星星位置,是否向上走 */
 
             if (this.upFlag) {
-                this.context.translate(0, 3);
-                this.upPosLow -= 3;
-                this.startY -= 3;
+                this.context.translate(0, 2);
+                this.upPosLow -= 2;
+                this.startY -= 2;
 
-                window.innerHeight -= 3;
-                pub.rolled += 3;
+                window.innerHeight -= 2;
+                pub.rolled += 2;
             }
             /*
              *   @starTop 星星位于屏幕的高度
@@ -175,6 +184,7 @@ $(document).ready(() => {
             pub.timer = setInterval(() => {
 
                 stage.refresh();
+
                 stage.up(star.getPos()[1]);
 
                 pub.judgeRender();
@@ -189,6 +199,7 @@ $(document).ready(() => {
                 * */
 
                 star.fall();
+
                 //console.log(pub.rolled);
             }, 100/6);
 
@@ -218,7 +229,7 @@ $(document).ready(() => {
         }
 
         jump () {
-            this.exp = -4;
+            this.exp = -3.5;
         }
 
         fall () {
@@ -510,7 +521,7 @@ $(document).ready(() => {
     /* 第一关的五个东西 */
 
     const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, [[0.7, 2.4]], [[3.9, 5.5]]);
-    const barrier_two_sign = new Sign(125, winHeight - 650, 80, 13, imgT2);
+    const barrier_two_sign = new Sign(125, winHeight - 660, 80, 13, imgT2);
     /* 第二关 一个圆 */
 
     stage.refresh();
