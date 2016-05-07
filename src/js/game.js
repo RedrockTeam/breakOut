@@ -3,14 +3,71 @@ $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmov
 
 $(document).ready(() => {
 
-    //$(document).on('click', e => e.preventDefault());
     $(document).on('touchstart', e => e.preventDefault());
-
 
     if (window.innerHeight > 568) {
         document.querySelector("#canvas").height = window.innerHeight;
     }
     /* 如果屏幕比预设值高, 那么更改 canvas 的高度 */
+
+    const $pause = $("#pause");
+    $pause.on('touchstart', () => {
+        /*
+        *   暂停按钮有很多坑 233
+        * */
+    });
+
+
+    const $gameBarrier = $("#game-barrier");
+    const $gameTimer = $("#game-timer");
+
+    let gameTimer = {
+        minute: 0,
+        second: 0,
+        millisec: 0,
+        run () {
+            this.millisec += 5;
+            if (this.millisec >= 60) {
+                this.second++;
+                this.millisec = 0;
+            }
+            if (this.second >= 60) {
+                this.minute++;
+                this.second = 0;
+            }
+        },
+        getTime () {
+            var str = '';
+
+            str += this.minute;
+            str += " : ";
+            if (this.second < 10) {
+                str += '0';
+            }
+            str += this.second;
+            str += " : ";
+            if (this.millisec < 10) {
+                str += '0';
+            }
+            str += this.millisec;
+
+            return str;
+
+        }
+    };
+
+    let contoller = {
+        timer: null,
+        startTime: null,
+        endTime: null
+    };
+
+
+
+    /*
+    *   上面是关于游戏控制的一些奇怪东西
+    *   下面是游戏 canvas 中运行的一些东西
+    * */
 
     let pub = {
         canvas: document.querySelector("#canvas"),
@@ -23,9 +80,10 @@ $(document).ready(() => {
         rolled: 0,
         renderBarrier: [0, 2],
         judgeRender () {
-            if (this.rolled >= 120 && this.rolled <= 200) {
+            if (this.rolled >= 120 && this.rolled < 410) {
                 this.renderBarrier = [1, 2];
-                /* 这里面也可以用来改变当前关卡 */
+            } else if (this.rolled >= 410 && this.rolled < 1000) {
+                this.renderBarrier = [2, 2];
             }
         },
         levelUp () {
@@ -48,20 +106,26 @@ $(document).ready(() => {
      */
 
     let gameController = [
-        ['touch.blink()'],
+        [
+            'touch.blink()'
+        ],
 
-        ['barrier_one_sign.paint()',
+        [
+            'barrier_one_sign.paint()',
             'barrier_one_bl.move()',
             'barrier_one_br.move()',
             'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose)',
             'barrier_one_tr.move()',
             'barrier_one_tl.move()',
-            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose)'],
+            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose)'
+        ],
 
-        ['barrier_two_sign.paint()',
+        [
+            'barrier_two_sign.paint()',
             'barrier_two.rotate()',
             'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status)',
-            'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status)']
+            'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status)'
+        ]
 
     ];
     /*
@@ -109,6 +173,7 @@ $(document).ready(() => {
 
         run () {
             pub.timer = setInterval(() => {
+
                 stage.refresh();
                 stage.up(star.getPos()[1]);
 
@@ -124,6 +189,7 @@ $(document).ready(() => {
                 * */
 
                 star.fall();
+                //console.log(pub.rolled);
             }, 100/6);
 
         }
@@ -468,14 +534,21 @@ $(document).ready(() => {
 
     $("#container").on("touchstart", function () {
 
-        window.clearInterval(pub.touchTimer);
-        /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
-
-        $(document).on('touchstart', function () {
-            star.jump();
-        });
-
         if (pub.run === false) {
+
+            window.clearInterval(pub.touchTimer);
+            /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+
+            contoller.timer = window.setInterval(() => {
+                gameTimer.run();
+                $gameTimer.text(gameTimer.getTime());
+            }, 50);
+            /* 不是 canvas 部分的计时器 */
+
+            $(document).on('touchstart', function () {
+                star.jump();
+            });
+
             stage.run();
             pub.run = true;
             pub.isStart = true;
