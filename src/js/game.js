@@ -20,6 +20,14 @@ $(document).ready(() => {
         isStart: false,
         touchTimer: null,
         currentLevel: 0,
+        rolled: 0,
+        renderBarrier: [0, 2],
+        judgeRender () {
+            if (this.rolled >= 120 && this.rolled <= 200) {
+                this.renderBarrier = [1, 2];
+                /* 这里面也可以用来改变当前关卡 */
+            }
+        },
         levelUp () {
             this.currentLevel++;
         },
@@ -35,22 +43,32 @@ $(document).ready(() => {
      *   @touchTimer 在整个屏幕没有开始刷新之前, 只对下面小手的区域地方刷新
      *   @currentLevel 记录关卡
      *   @levelUp 每次通过一个关卡就加 1
+     *   @rolled 被卷去高度
+     *   @renderBarrier 控制游戏需要渲染的关卡
      */
 
     let gameController = [
-        'barrier_one_sign.paint()',
-        'barrier_two_sign.paint()',
-        'barrier_one_left.move()',
-        'barrier_one_right.move()',
-        'barrier_two_left.move()',
-        'barrier_two_right.move()',
-        'barrier_three.rotate()',
-        'star.collision(barrier_two_left.testPoint, barrier_two_left.isClose)',
-        'star.collision(barrier_one_left.testPoint, barrier_one_left.isClose)',
-        'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status)',
-        'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status)',
-        'touch.blink()'
+        ['touch.blink()'],
+
+        ['barrier_one_sign.paint()',
+            'barrier_one_bl.move()',
+            'barrier_one_br.move()',
+            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose)',
+            'barrier_one_tr.move()',
+            'barrier_one_tl.move()',
+            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose)'],
+
+        ['barrier_two_sign.paint()',
+            'barrier_two.rotate()',
+            'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status)',
+            'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status)']
+
     ];
+    /*
+    *   gameController
+    *   二维数组, 第一维的每个元素代表关卡
+    *   整个游戏运行所依赖的函数, 运行的时候从这里面取来...eval
+    * */
 
     class Stage {
 
@@ -80,13 +98,13 @@ $(document).ready(() => {
                 this.startY -= 3;
 
                 window.innerHeight -= 3;
+                pub.rolled += 3;
             }
             /*
              *   @starTop 星星位于屏幕的高度
              *   如果达到向上条件整个屏幕向下拉 3px
              *   减去 window.innerHeight 为了方便判断星星是否跳出屏幕下方
              * */
-
         }
 
         run () {
@@ -94,7 +112,11 @@ $(document).ready(() => {
                 stage.refresh();
                 stage.up(star.getPos()[1]);
 
-                gameController.forEach(item => eval(item));
+                pub.judgeRender();
+
+                for (let i = pub.renderBarrier[0]; i <= pub.renderBarrier[1]; i++) {
+                    gameController[i].forEach(item => eval(item));
+                }
 
                 /*
                 *   运行整个游戏
@@ -414,26 +436,26 @@ $(document).ready(() => {
     const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
     const star = new Star(winHeight - 180, 145, 30, 30, imgStar);
 
-    const barrier_one_left = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
-    const barrier_one_right = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+    const barrier_one_bl = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
+    const barrier_one_br = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
     const barrier_one_sign = new Sign(110, winHeight - 350, 100, 13, imgT1);
-    const barrier_two_left = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
-    const barrier_two_right = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+    const barrier_one_tl = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
+    const barrier_one_tr = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
     /* 第一关的五个东西 */
 
-    const barrier_three = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, [[0.7, 2.4]], [[3.9, 5.5]]);
+    const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, [[0.7, 2.4]], [[3.9, 5.5]]);
     const barrier_two_sign = new Sign(125, winHeight - 650, 80, 13, imgT2);
     /* 第二关 一个圆 */
 
     stage.refresh();
 
     window.setTimeout(() => {
-        barrier_one_left.paint();
-        barrier_one_right.paint();
+        barrier_one_bl.paint();
+        barrier_one_br.paint();
         barrier_one_sign.paint();
-        barrier_two_left.paint();
-        barrier_two_right.paint();
-        barrier_three.paint();
+        barrier_one_tl.paint();
+        barrier_one_tr.paint();
+        barrier_two.paint();
         star.paint();
     }, 200);
 
