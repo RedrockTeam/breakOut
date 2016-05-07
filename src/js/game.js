@@ -27,7 +27,7 @@ $(document).ready(() => {
         millisec: 0,
         run () {
             this.millisec += 5;
-            if (this.millisec >= 60) {
+            if (this.millisec >= 100) {
                 this.second++;
                 this.millisec = 0;
             }
@@ -143,7 +143,7 @@ $(document).ready(() => {
             this.width = 320;
             this.height = document.querySelector("#canvas").height;
             this.upFlag = false;
-            this.upPosLow = window.innerHeight / 2;
+            this.upPosLow = window.innerHeight / 2.5 ;
             /* canvas 只有一个, 构造的时候不用传参 */
         }
 
