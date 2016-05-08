@@ -1,6 +1,8 @@
 /*
  *   16-5-7
  *   关卡没写完 然后加载效果
+ *   在星星上面加一个 到达的最高点 通过最高点判断当前关卡和需要渲染的关卡
+ *   如果掉下来了 ?
  * */
 
 
@@ -22,8 +24,7 @@ $(document).ready(() => {
          *   暂停按钮有很多坑 233
          * */
     });
-
-
+    
     const $gameBarrier = $("#game-barrier");
     const $gameTimer = $("#game-timer");
 
@@ -74,8 +75,6 @@ $(document).ready(() => {
         }
     };
 
-
-
     /*
      *   上面是关于游戏控制的一些奇怪东西
      *   下面是游戏 canvas 中运行的一些东西
@@ -98,6 +97,7 @@ $(document).ready(() => {
                 this.renderBarrier = [2, 2];
             }
         },
+
         levelUp () {
             this.currentLevel++;
         },
@@ -190,6 +190,8 @@ $(document).ready(() => {
 
                 stage.up(star.getPos()[1]);
 
+                star.getHighestPos();
+
                 pub.judgeRender();
 
                 for (let i = pub.renderBarrier[0]; i <= pub.renderBarrier[1]; i++) {
@@ -225,6 +227,7 @@ $(document).ready(() => {
 
             this.timer = null;
             this.exp = .1;
+            this.reachHeight = this.top;
         }
 
         paint () {
@@ -280,6 +283,16 @@ $(document).ready(() => {
          *   检测星星是否碰撞了
          *   然后这里面也有一些碰撞之后的动作, 待写
          * */
+
+        getHighestPos () {
+            const curHeight = this.getPos()[1];
+
+            if (curHeight < this.reachHeight) {
+                this.reachHeight = curHeight;
+            }
+
+            console.log("this height: " + this.reachHeight);
+        }
     }
     /*
      *   class Star
