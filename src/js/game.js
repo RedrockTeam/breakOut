@@ -1,8 +1,7 @@
 /*
- *   16-5-7
- *   关卡没写完 然后加载效果
- *   在星星上面加一个 到达的最高点 通过最高点判断当前关卡和需要渲染的关卡
- *   如果掉下来了 ?
+ *   16-5-9
+ *   加了关卡判断 不优雅
+ *   感觉图出来了可以重写了, 变量名字啥的
  * */
 
 
@@ -69,7 +68,7 @@ $(document).ready(() => {
     let controller = {
         timer: null,
         startTime: null,
-        endTime: null,
+        totalTime: null,
         stopTimer () {
             window.clearInterval(this.timer);
         }
@@ -97,12 +96,34 @@ $(document).ready(() => {
                 this.renderBarrier = [2, 2];
             }
         },
+        judgeLevel () {
+            const reach = star.reachHeight;
 
-        levelUp () {
-            this.currentLevel++;
+            if (reach <= 150) {
+                this.currentLevel = 1;
+            }
+
+            if (reach <= -170) {
+                this.currentLevel = 2;
+            }
+
+            $gameBarrier.text(this.currentLevel);
+
+            /*
+            *   妈的里面的数据要手动改
+            *   考虑下优雅的写法
+            * */
         },
         stopTimer () {
             window.clearInterval(this.timer);
+        },
+        gameOver () {
+            controller.totalTime = new Date() - controller.startTime;
+            console.log("Total time is: " + controller.totalTime);
+
+            this.stopTimer();
+            controller.stopTimer();
+            console.log("Game over");
         }
     };
     /*
@@ -112,7 +133,7 @@ $(document).ready(() => {
      *   @pub.isStart 是否已经开始了（防止开始之前暂停）
      *   @touchTimer 在整个屏幕没有开始刷新之前, 只对下面小手的区域地方刷新
      *   @currentLevel 记录关卡
-     *   @levelUp 每次通过一个关卡就加 1
+     *   @judgeLevel 每次通过一个关卡就加 1
      *   @rolled 被卷去高度
      *   @renderBarrier 控制游戏需要渲染的关卡
      */
@@ -205,6 +226,8 @@ $(document).ready(() => {
 
                 star.fall();
 
+                pub.judgeLevel();
+
                 //console.log(pub.rolled);
             }, 100/6);
 
@@ -249,8 +272,7 @@ $(document).ready(() => {
         isEnd () {
             if (this.top > window.innerHeight) {
                 console.log("Fall down game over");
-                pub.stopTimer();
-                controller.stopTimer();
+                pub.gameOver();
             }
         }
         /*
@@ -272,10 +294,7 @@ $(document).ready(() => {
 
             if (Math.abs(posY - selfY) < 10 && status) {
                 console.log("collision");
-                console.log("game over");
-
-                pub.stopTimer();
-                controller.stopTimer();
+                pub.gameOver();
             }
         }
         /*
@@ -573,6 +592,9 @@ $(document).ready(() => {
                 $gameTimer.text(gameTimer.getTime());
             }, 50);
             /* 不是 canvas 部分的计时器 */
+
+            controller.startTime = new Date();
+            /* 真正的游戏计时器 */
 
             $(document).on('touchstart', function () {
                 star.jump();
