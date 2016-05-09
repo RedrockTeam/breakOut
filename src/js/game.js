@@ -1,9 +1,7 @@
 /*
  *   16-5-9
- *   加了关卡判断 不优雅
- *   感觉图出来了可以重写了, 变量名字啥的
+ *   慢慢切关卡吧 233
  * */
-
 
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
@@ -23,7 +21,7 @@ $(document).ready(() => {
          *   暂停按钮有很多坑 233
          * */
     });
-    
+
     const $gameBarrier = $("#game-barrier");
     const $gameTimer = $("#game-timer");
 
@@ -88,13 +86,13 @@ $(document).ready(() => {
         touchTimer: null,
         currentLevel: 0,
         rolled: 0,
-        renderBarrier: [0, 2],
+        renderBarrier: [0, 3],
         judgeRender () {
-            if (this.rolled >= 120 && this.rolled < 410) {
-                this.renderBarrier = [1, 2];
-            } else if (this.rolled >= 410 && this.rolled < 1000) {
-                this.renderBarrier = [2, 2];
-            }
+            //if (this.rolled >= 120 && this.rolled < 410) {
+            //    this.renderBarrier = [1, 2];
+            //} else if (this.rolled >= 410 && this.rolled < 340) {
+            //    this.renderBarrier = [2, 3];
+            //}
         },
         judgeLevel () {
             const reach = star.reachHeight;
@@ -110,9 +108,9 @@ $(document).ready(() => {
             $gameBarrier.text(this.currentLevel);
 
             /*
-            *   妈的里面的数据要手动改
-            *   考虑下优雅的写法
-            * */
+             *   妈的里面的数据要手动改
+             *   考虑下优雅的写法
+             * */
         },
         stopTimer () {
             window.clearInterval(this.timer);
@@ -147,17 +145,23 @@ $(document).ready(() => {
             'barrier_one_sign.paint()',
             'barrier_one_bl.move()',
             'barrier_one_br.move()',
-            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose)',
+            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
             'barrier_one_tr.move()',
             'barrier_one_tl.move()',
-            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose)'
+            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
         ],
 
         [
             'barrier_two_sign.paint()',
             'barrier_two.rotate()',
-            'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status)',
-            'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status)'
+            'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status, 24)',
+            'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status, 24)'
+        ],
+
+        [
+            'barrier_three.rotate()',
+            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
         ]
 
     ];
@@ -228,8 +232,8 @@ $(document).ready(() => {
 
                 pub.judgeLevel();
 
-                //console.log(pub.rolled);
-            }, 100/6);
+                console.log(pub.rolled);
+            }, 1000/60);
 
         }
     }
@@ -289,10 +293,10 @@ $(document).ready(() => {
          *   获取星星中心点的坐标 [x, y]
          * */
 
-        collision (posY, status) {
+        collision (posY, status, range) {
             let selfY = this.getPos()[1];
 
-            if (Math.abs(posY - selfY) < 10 && status) {
+            if (Math.abs(posY - selfY) < range && status) {
                 console.log("collision");
                 pub.gameOver();
             }
@@ -310,7 +314,7 @@ $(document).ready(() => {
                 this.reachHeight = curHeight;
             }
 
-            console.log("this height: " + this.reachHeight);
+            //console.log("this height: " + this.reachHeight);
         }
     }
     /*
@@ -349,7 +353,7 @@ $(document).ready(() => {
          *   x, y 和上面星星的 top left 一个道理
          *   rotateDeg 已经旋转角度
          *   initDeg 初始旋转角度, 用在转了一圈之后重新开始转
-         *   testPoint 上下检测碰撞的点
+         *   testPoint 上下检测碰撞的点 为啥 +10 -10 补上宽度的差
          *   zoneUp 和 zoneDown 传二维数组
          * */
 
@@ -544,6 +548,7 @@ $(document).ready(() => {
     const imgT1 = document.querySelector("#img-title-1");
     const imgC1 = document.querySelector("#img-circle-1");
     const imgT2 = document.querySelector("#img-title-2");
+    const imgC2 = document.querySelector("#img-circle-2");
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
@@ -561,6 +566,10 @@ $(document).ready(() => {
     const barrier_two_sign = new Sign(125, winHeight - 660, 80, 13, imgT2);
     /* 第二关 一个圆 */
 
+
+    const barrier_three = new Circle(60, winHeight - 1100, 200, 200, imgC2, 0, [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]], [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]);
+    /* 第三关 一个圆 */
+
     stage.refresh();
 
     window.setTimeout(() => {
@@ -570,6 +579,7 @@ $(document).ready(() => {
         barrier_one_tl.paint();
         barrier_one_tr.paint();
         barrier_two.paint();
+        barrier_three.paint();
         star.paint();
     }, 200);
 

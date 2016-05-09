@@ -1,4 +1,4 @@
 #### 突出重围 
 
-+	npm install
-+ 	dev: /src  ||  product: /dist
++	develop: './src' product: './dist'
++	npm install 下载本地开发依赖
