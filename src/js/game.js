@@ -267,14 +267,14 @@ $(document).ready(() => {
      * */
 
     class Star {
-        constructor (top, left, width, height, img) {
+        constructor (obj) {
             this.context = pub.context;
 
-            this.top = top;
-            this.left = left;
-            this.width = width;
-            this.height = height;
-            this.img = img;
+            this.top = obj.top;
+            this.left = obj.left;
+            this.width = obj.width;
+            this.height = obj.height;
+            this.img = obj.img;
 
             this.timer = null;
             this.exp = .1;
@@ -347,32 +347,32 @@ $(document).ready(() => {
      * */
 
     class Circle {
-        constructor (x, y, width, height, img, rotateDegree, rotateSpeed, zoneUp, zoneDown) {
+        constructor (obj) {
             this.context = pub.context;
 
             this.start = {
-                x,
-                y
+                x: obj.x,
+                y: obj.y
             };
 
-            this.width = width;
-            this.height = height;
-            this.img = img;
-            this.rotateDeg = rotateDegree;
-            this.initDegree = rotateDegree;
+            this.width = obj.width;
+            this.height = obj.height;
+            this.img = obj.img;
+            this.rotateDeg = obj.rotateDegree;
+            this.initDegree = obj.rotateDegree;
             this.testPoint = {
                 up: {
                     y: this.start.y + 10,
-                    zone: zoneUp,
+                    zone: obj.zoneUp,
                     status: true
                 },
                 down: {
                     y: this.start.y - 10 + this.height,
-                    zone: zoneDown,
+                    zone: obj.zoneDown,
                     status: true
                 }
             };
-            this.rotateSpeed = rotateSpeed;
+            this.rotateSpeed = obj.rotateSpeed;
         }
         /*
          *   x, y 和上面星星的 top left 一个道理
@@ -406,7 +406,7 @@ $(document).ready(() => {
             }
             /* 转了一圈之后重新转/判断 */
 
-            console.log(this.rotateDeg);
+            // console.log(this.rotateDeg);
 
             let upCount = 0;
             let downCount = 0;
@@ -430,19 +430,19 @@ $(document).ready(() => {
      * */
 
     class Block {
-        constructor (left, top, width, height, img, direction, speed, maxLeft, maxRight, zone) {
+        constructor (obj) {
             this.context = pub.context;
 
-            this.left = left;
-            this.top = top;
-            this.width = width;
-            this.height = height;
-            this.img = img;
-            this.direction = direction;
-            this.speed = speed;
-            this.maxLeft = maxLeft;
-            this.maxRight = maxRight;
-            this.zone = zone;
+            this.left = obj.left;
+            this.top = obj.top;
+            this.width = obj.width;
+            this.height = obj.height;
+            this.img = obj.img;
+            this.direction = obj.direction;
+            this.speed = obj.speed;
+            this.maxLeft = obj.maxLeft;
+            this.maxRight = obj.maxRight;
+            this.zone = obj.zone;
             /*
              *   top 方块左边距画布左边位置
              *   left 方块顶端距画布顶端位置
@@ -493,14 +493,14 @@ $(document).ready(() => {
      * */
 
     class Food {
-        constructor (left, top, width, height, img) {
+        constructor (obj) {
             this.context = pub.context;
 
-            this.left = left;
-            this.top = top;
-            this.width = width;
-            this.height = height;
-            this.img = img;
+            this.left = obj.left;
+            this.top = obj.top;
+            this.width = obj.width;
+            this.height = obj.height;
+            this.img = obj.img;
             this.isAte = false;
         }
 
@@ -527,14 +527,14 @@ $(document).ready(() => {
      * */
 
     class Sign {
-        constructor (left, top, width, height, img) {
+        constructor (obj) {
             this.context = pub.context;
 
-            this.left = left;
-            this.top = top;
-            this.width = width;
-            this.height = height;
-            this.img = img;
+            this.left = obj.left;
+            this.top = obj.top;
+            this.width = obj.width;
+            this.height = obj.height;
+            this.img = obj.img;
 
             this.scale = 1;
             this.flag = false;
@@ -586,7 +586,7 @@ $(document).ready(() => {
     //const imgT6 = document.querySelector("#img-title-6");
     //const imgWater1 = document.querySelector("#img-water-1");
     //const imgWater2 = document.querySelector("#img-water-2");
-    //const winHeight = window.innerHeight;
+
     //
     //const stage = new Stage();
     //const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
@@ -626,49 +626,152 @@ $(document).ready(() => {
     ////const barrier_seven_sign = new Sign(110, winHeight - 2430, 130, 13, imgT6);
     ///* 第七关 强渡乌江 */
 
+    const winHeight = window.innerHeight;
+    const stage = new Stage();
+    const touch = new Sign({
+        left: 167,
+        top: winHeight - 70,
+        width: 40,
+        height: 60,
+        img: document.querySelector("#img-touch")
+    });
+    const star = new Star({
+        top: winHeight - 180,
+        left: 145,
+        width: 30,
+        height: 30,
+        img: document.querySelector("#img-star")
+
+    });
+    const barrier_one_bl = new Block({
+        left: 0,
+        top: winHeight - 300,
+        width: 80,
+        height: 13,
+        img: document.querySelector("#img-rope"),
+        direction: true,
+        maxLeft: 40,
+        maxRight: 120,
+        zone: [[110, 120]]
+    });
+    const barrier_one_br = new Block({
+        left: 240,
+        top: winHeight - 300,
+        width: 80,
+        height: 13,
+        img: document.querySelector("#img-rope"),
+        direction: false,
+        maxLeft: 200,
+        maxRight: 280,
+        zone: [[200, 215]]
+    });
+    const barrier_one_tl = new Block({
+        left: 0,
+        top: winHeight - 400,
+        width: 80,
+        height: 13,
+        img: document.querySelector("#img-rope"),
+        direction: true,
+        maxLeft: 40,
+        maxRight: 120,
+        zone: [[110, 120]]
+    });
+    const barrier_one_tr = new Block({
+        left: 240,
+        top: winHeight - 400,
+        width: 80,
+        height: 13,
+        img: document.querySelector("#img-rope"),
+        direction: false,
+        maxLeft: 200,
+        maxRight: 280,
+        zone: [[200, 215]]
+    });
+    const barrier_two = new Circle({
+        x: 60,
+        y: winHeight - 750,
+        width: 200,
+        height: 200,
+        img: document.querySelector("#img-circle-1"),
+        rotateDegree: 0,
+        zoneUp: [[0.7, 2.4]],
+        zoneDown: [[3.9, 5.5]],
+        rotateSpeed: 0.02
+    });
+
+    //new Circle(60, winHeight - 750, 200, 200, imgC1, 0, 0.02, [[0.7, 2.4]], [[3.9, 5.5]]);
+    //constructor (obj) {
+    //    this.context = pub.context;
+    //
+    //    this.start = {
+    //        x: obj.x,
+    //        y: obj.y
+    //    };
+    //
+    //    this.width = obj.width;
+    //    this.height = obj.height;
+    //    this.img = obj.img;
+    //    this.rotateDeg = obj.rotateDegree;
+    //    this.initDegree = obj.rotateDegree;
+    //    this.testPoint = {
+    //        up: {
+    //            y: this.start.y + 10,
+    //            zone: obj.zoneUp,
+    //            status: true
+    //        },
+    //        down: {
+    //            y: this.start.y - 10 + this.height,
+    //            zone: obj.zoneDown,
+    //            status: true
+    //        }
+    //    };
+    //    this.rotateSpeed = obj.rotateSpeed;
+    //}
+
+
     stage.refresh();
 
     window.setTimeout(() => {
-        barrier_one_bl.paint();
-        barrier_one_br.paint();
-        barrier_one_sign.paint();
-        barrier_one_tl.paint();
-        barrier_one_tr.paint();
-        barrier_two.paint();
-        barrier_three.paint();
-        star.paint();
+        // barrier_one_bl.paint();
+        // barrier_one_br.paint();
+        // barrier_one_sign.paint();
+        // barrier_one_tl.paint();
+        // barrier_one_tr.paint();
+        // barrier_two.paint();
+        // barrier_three.paint();
+        // star.paint();
     }, 200);
 
     pub.touchTimer = window.setInterval(function () {
-        touch.blinkErase();
-        touch.blink();
+        // touch.blinkErase();
+        // touch.blink();
     }, 1000/60);
 
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
-    $("#container").on("touchstart", function () {
+    // $("#container").on("touchstart", function () {
 
-        if (pub.run === false) {
+    //     if (pub.run === false) {
 
-            window.clearInterval(pub.touchTimer);
-            /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+    //         window.clearInterval(pub.touchTimer);
+    //         /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
 
-            controller.timer = window.setInterval(() => {
-                gameTimer.run();
-                $gameTimer.text(gameTimer.getTime());
-            }, 50);
-            /* 不是 canvas 部分的计时器 */
+    //         controller.timer = window.setInterval(() => {
+    //             gameTimer.run();
+    //             $gameTimer.text(gameTimer.getTime());
+    //         }, 50);
+    //         /* 不是 canvas 部分的计时器 */
 
-            controller.startTime = new Date();
-            /* 真正的游戏计时器 */
+    //         controller.startTime = new Date();
+    //         /* 真正的游戏计时器 */
 
-            $(document).on('touchstart', function () {
-                star.jump();
-            });
+    //         $(document).on('touchstart', function () {
+    //             star.jump();
+    //         });
 
-            stage.run();
-            pub.run = true;
-            pub.isStart = true;
-        }
-    });
+    //         stage.run();
+    //         pub.run = true;
+    //         pub.isStart = true;
+    //     }
+    // });
 });
