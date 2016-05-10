@@ -82,7 +82,7 @@ $(document).ready(() => {
         touchTimer: null,
         currentLevel: 0,
         rolled: 0,
-        renderBarrier: [0, 4],
+        renderBarrier: [0, 5],
         judgeRender () {
             //if (this.rolled >= 120 && this.rolled < 410) {
             //    this.renderBarrier = [1, 2];
@@ -166,6 +166,12 @@ $(document).ready(() => {
             'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 22)',
             'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 22)',
             'barrier_four_sign.paint()'
+        ],
+
+        [
+            'barrier_five.rotate()',
+            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 22)',
+            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 22)'
         ]
 
     ];
@@ -386,7 +392,7 @@ $(document).ready(() => {
             }
             /* 转了一圈之后重新转/判断 */
 
-            //console.log(this.rotateDeg);
+            console.log(this.rotateDeg);
 
             let upCount = 0;
             let downCount = 0;
@@ -557,6 +563,7 @@ $(document).ready(() => {
     const imgT3 = document.querySelector("#img-title-3");
     const imgC3 = document.querySelector("#img-circle-3");
     const imgT4 = document.querySelector("#img-title-4");
+    const imgC4 = document.querySelector("#img-circle-4");
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
@@ -582,6 +589,9 @@ $(document).ready(() => {
     const barrier_four = new Circle(60, winHeight - 1500, 200, 200, imgC3, 0, 0.02, [[0.5, 1.6], [2.6, 3.7], [4.7, 5.7]], [[0, 0.5], [1.6, 2.6], [3.7, 4.7], [5.75, 7]]);
     const barrier_four_sign = new Sign(125, winHeight - 1400, 80, 13, imgT4);
     /* 第四关 一个圆 */
+
+    const barrier_five = new Circle(60, winHeight - 2000, 215, 300, imgC4, 0, 0.04, [[1, 3], [4.3, 6.15]], [[1, 3], [4.3, 6.15]]);
+    /* 第五关 一个圆 */
 
     stage.refresh();
 
