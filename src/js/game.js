@@ -1,7 +1,3 @@
-/*
- *   16-5-9
- *   慢慢切关卡吧 233
- * */
 
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
@@ -86,7 +82,7 @@ $(document).ready(() => {
         touchTimer: null,
         currentLevel: 0,
         rolled: 0,
-        renderBarrier: [0, 3],
+        renderBarrier: [0, 4],
         judgeRender () {
             //if (this.rolled >= 120 && this.rolled < 410) {
             //    this.renderBarrier = [1, 2];
@@ -161,7 +157,15 @@ $(document).ready(() => {
         [
             'barrier_three.rotate()',
             'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
-            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)',
+            'barrier_three_sign.paint()'
+        ],
+
+        [
+            'barrier_four.rotate()',
+            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 22)',
+            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 22)',
+            'barrier_four_sign.paint()'
         ]
 
     ];
@@ -232,7 +236,7 @@ $(document).ready(() => {
 
                 pub.judgeLevel();
 
-                console.log(pub.rolled);
+                //console.log(pub.rolled);
             }, 1000/60);
 
         }
@@ -323,7 +327,7 @@ $(document).ready(() => {
      * */
 
     class Circle {
-        constructor (x, y, width, height, img, rotateDegree, zoneUp, zoneDown) {
+        constructor (x, y, width, height, img, rotateDegree, rotateSpeed, zoneUp, zoneDown) {
             this.context = pub.context;
 
             this.start = {
@@ -347,7 +351,8 @@ $(document).ready(() => {
                     zone: zoneDown,
                     status: true
                 }
-            }
+            };
+            this.rotateSpeed = rotateSpeed;
         }
         /*
          *   x, y 和上面星星的 top left 一个道理
@@ -373,7 +378,7 @@ $(document).ready(() => {
             this.context.restore();
             /* 通过改变画布的相对位置来进行重绘 */
 
-            this.rotateDeg += .02;
+            this.rotateDeg += this.rotateSpeed;
             /* 单位时间转过弧度, 越大越快 */
 
             if(this.rotateDeg >= 2 * Math.PI + this.initDegree) {
@@ -549,6 +554,9 @@ $(document).ready(() => {
     const imgC1 = document.querySelector("#img-circle-1");
     const imgT2 = document.querySelector("#img-title-2");
     const imgC2 = document.querySelector("#img-circle-2");
+    const imgT3 = document.querySelector("#img-title-3");
+    const imgC3 = document.querySelector("#img-circle-3");
+    const imgT4 = document.querySelector("#img-title-4");
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
@@ -562,13 +570,18 @@ $(document).ready(() => {
     const barrier_one_tr = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
     /* 第一关的五个东西 */
 
-    const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, [[0.7, 2.4]], [[3.9, 5.5]]);
+    const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, 0.02, [[0.7, 2.4]], [[3.9, 5.5]]);
     const barrier_two_sign = new Sign(125, winHeight - 660, 80, 13, imgT2);
     /* 第二关 一个圆 */
 
 
-    const barrier_three = new Circle(60, winHeight - 1100, 200, 200, imgC2, 0, [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]], [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]);
+    const barrier_three = new Circle(60, winHeight - 1100, 200, 200, imgC2, 0, 0.01, [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]], [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]);
+    const barrier_three_sign = new Sign(130, winHeight - 1000, 80, 13, imgT3);
     /* 第三关 一个圆 */
+
+    const barrier_four = new Circle(60, winHeight - 1500, 200, 200, imgC3, 0, 0.02, [[0.5, 1.6], [2.6, 3.7], [4.7, 5.7]], [[0, 0.5], [1.6, 2.6], [3.7, 4.7], [5.75, 7]]);
+    const barrier_four_sign = new Sign(125, winHeight - 1400, 80, 13, imgT4);
+    /* 第四关 一个圆 */
 
     stage.refresh();
 
