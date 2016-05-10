@@ -82,7 +82,7 @@ $(document).ready(() => {
         touchTimer: null,
         currentLevel: 0,
         rolled: 0,
-        renderBarrier: [0, 6],
+        renderBarrier: [0, 7],
         judgeRender () {
             //if (this.rolled >= 120 && this.rolled < 410) {
             //    this.renderBarrier = [1, 2];
@@ -132,58 +132,63 @@ $(document).ready(() => {
      *   @renderBarrier 控制游戏需要渲染的关卡
      */
 
-    let gameController = [
-        [
-            'touch.blink()'
-        ],
-
-        [
-            'barrier_one_sign.paint()',
-            'barrier_one_bl.move()',
-            'barrier_one_br.move()',
-            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
-            'barrier_one_tr.move()',
-            'barrier_one_tl.move()',
-            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
-        ],
-
-        [
-            'barrier_two_sign.paint()',
-            'barrier_two.rotate()',
-            'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status, 24)',
-            'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status, 24)'
-        ],
-
-        [
-            'barrier_three.rotate()',
-            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
-            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)',
-            'barrier_three_sign.paint()'
-        ],
-
-        [
-            'barrier_four.rotate()',
-            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 22)',
-            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 22)',
-            'barrier_four_sign.paint()'
-        ],
-
-        [
-            'barrier_five.rotate()',
-            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 20)',
-            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 20)',
-            'barrier_five_sign.paint()'
-        ],
-
-        [
-            'barrier_six_b.move()',
-            'barrier_six_t.move()',
-            'star.collision(barrier_six_b.testPoint, barrier_six_b.isClose, 18)',
-            'star.collision(barrier_six_t.testPoint, barrier_six_t.isClose, 18)',
-            'barrier_six_sign.paint()'
-        ]
-
-    ];
+    //let gameController = [
+    //    [
+    //        'touch.blink()'
+    //    ],
+    //
+    //    [
+    //        'barrier_one_sign.paint()',
+    //        'barrier_one_bl.move()',
+    //        'barrier_one_br.move()',
+    //        'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
+    //        'barrier_one_tr.move()',
+    //        'barrier_one_tl.move()',
+    //        'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
+    //    ],
+    //
+    //    [
+    //        'barrier_two_sign.paint()',
+    //        'barrier_two.rotate()',
+    //        'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status, 24)',
+    //        'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status, 24)'
+    //    ],
+    //
+    //    [
+    //        'barrier_three.rotate()',
+    //        'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
+    //        'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)',
+    //        'barrier_three_sign.paint()'
+    //    ],
+    //
+    //    [
+    //        'barrier_four.rotate()',
+    //        'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 22)',
+    //        'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 22)',
+    //        'barrier_four_sign.paint()'
+    //    ],
+    //
+    //    [
+    //        'barrier_five.rotate()',
+    //        'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 20)',
+    //        'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 20)',
+    //        'barrier_five_sign.paint()'
+    //    ],
+    //
+    //    [
+    //        'barrier_six_b.move()',
+    //        'barrier_six_t.move()',
+    //        'star.collision(barrier_six_b.testPoint, barrier_six_b.isClose, 18)',
+    //        'star.collision(barrier_six_t.testPoint, barrier_six_t.isClose, 18)',
+    //        'barrier_six_sign.paint()'
+    //    ],
+    //
+    //    [
+    //        'barrier_seven_b.move()',
+    //        'barrier_seven_t.move()'
+    //    ]
+    //
+    //];
     /*
      *   gameController
      *   二维数组, 第一维的每个元素代表关卡
@@ -425,7 +430,7 @@ $(document).ready(() => {
      * */
 
     class Block {
-        constructor (left, top, width, height, img, direction, maxLeft, maxRight, zone) {
+        constructor (left, top, width, height, img, direction, speed, maxLeft, maxRight, zone) {
             this.context = pub.context;
 
             this.left = left;
@@ -434,6 +439,7 @@ $(document).ready(() => {
             this.height = height;
             this.img = img;
             this.direction = direction;
+            this.speed = speed;
             this.maxLeft = maxLeft;
             this.maxRight = maxRight;
             this.zone = zone;
@@ -459,6 +465,7 @@ $(document).ready(() => {
         move () {
             let center = this.left + this.width / 2;
             let count = 0;
+            let speed = this.speed;
             /*
              *   center 图形的中心点
              *   count 判断碰撞的标记
@@ -474,7 +481,7 @@ $(document).ready(() => {
                 this.direction = !this.direction;
             }
 
-            this.direction ? this.left += 2 : this.left -= 2;
+            this.direction ? this.left += speed : this.left -= speed;
             /* 这里的 1 可以改变用来改变速度 越大越快 */
 
             this.paint();
@@ -562,61 +569,62 @@ $(document).ready(() => {
      *   沿路的路标 下面的小手啥的
      * */
 
-    const imgStar = document.querySelector("#img-star");
-    const imgRope = document.querySelector("#img-rope");
-    const imgTouch = document.querySelector("#img-touch");
-    const imgT1 = document.querySelector("#img-title-1");
-    const imgC1 = document.querySelector("#img-circle-1");
-    const imgT2 = document.querySelector("#img-title-2");
-    const imgC2 = document.querySelector("#img-circle-2");
-    const imgT3 = document.querySelector("#img-title-3");
-    const imgC3 = document.querySelector("#img-circle-3");
-    const imgT4 = document.querySelector("#img-title-4");
-    const imgC4 = document.querySelector("#img-circle-4");
-    const imgT5 = document.querySelector("#img-title-5");
-    const imgGrass = document.querySelector("#img-grass");
-    const imgMountain = document.querySelector("#img-mountain");
-    const imgT6 = document.querySelector("#img-title-6");
-    const imgWater1 = document.querySelector("#img-water-1");
-    const imgWater2 = document.querySelector("#img-water-2");
-    const winHeight = window.innerHeight;
-
-    const stage = new Stage();
-    const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
-    const star = new Star(winHeight - 180, 145, 30, 30, imgStar);
-
-    const barrier_one_bl = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
-    const barrier_one_br = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
-    const barrier_one_sign = new Sign(110, winHeight - 350, 100, 13, imgT1);
-    const barrier_one_tl = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
-    const barrier_one_tr = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
-    /* 第一关的五个东西 */
-
-    const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, 0.02, [[0.7, 2.4]], [[3.9, 5.5]]);
-    const barrier_two_sign = new Sign(125, winHeight - 660, 80, 13, imgT2);
-    /* 第二关 一个圆 */
-
-
-    const barrier_three = new Circle(60, winHeight - 1100, 200, 200, imgC2, 0, 0.01, [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]], [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]);
-    const barrier_three_sign = new Sign(130, winHeight - 1000, 80, 13, imgT3);
-    /* 第三关 一个圆 */
-
-    const barrier_four = new Circle(60, winHeight - 1500, 200, 200, imgC3, 0, 0.02, [[0.5, 1.6], [2.6, 3.7], [4.7, 5.7]], [[0, 0.5], [1.6, 2.6], [3.7, 4.7], [5.75, 7]]);
-    const barrier_four_sign = new Sign(125, winHeight - 1400, 80, 13, imgT4);
-    /* 第四关 一个圆 */
-
-    const barrier_five = new Circle(60, winHeight - 2000, 215, 300, imgC4, 0, 0.04, [[1.1, 3.1], [4.2, 6.2]], [[1.1, 3.1], [4.2, 6.2]]);
-    const barrier_five_sign = new Sign(80, winHeight - 1850, 130, 13, imgT5);
-    /* 第五关 一个圆 */
-
-    const barrier_six_b = new Block(0, winHeight - 2100, 100, 21, imgGrass, true, 50, 270, [[110, 210]]);
-    const barrier_six_t = new Block(220, winHeight - 2200, 100, 26, imgMountain, true, 50, 270, [[110, 210]]);
-    const barrier_six_sign = new Sign(110, winHeight - 2130, 130, 13, imgT6);
-    /* 第六关 雪山和草地 */
-
-    const barrier_seven_b = new Block(0, winHeight - 2300, 100, 21, imgWater1, true, 50, 270, [[110, 210]]);
-    const barrier_seven_t = new Block(0, winHeight - 2400, 100, 21, imgWater2, true, 50, 270, [[110, 210]]);
-    /* 第七关 强渡乌江 */
+    //const imgStar = document.querySelector("#img-star");
+    //const imgRope = document.querySelector("#img-rope");
+    //const imgTouch = document.querySelector("#img-touch");
+    //const imgT1 = document.querySelector("#img-title-1");
+    //const imgC1 = document.querySelector("#img-circle-1");
+    //const imgT2 = document.querySelector("#img-title-2");
+    //const imgC2 = document.querySelector("#img-circle-2");
+    //const imgT3 = document.querySelector("#img-title-3");
+    //const imgC3 = document.querySelector("#img-circle-3");
+    //const imgT4 = document.querySelector("#img-title-4");
+    //const imgC4 = document.querySelector("#img-circle-4");
+    //const imgT5 = document.querySelector("#img-title-5");
+    //const imgGrass = document.querySelector("#img-grass");
+    //const imgMountain = document.querySelector("#img-mountain");
+    //const imgT6 = document.querySelector("#img-title-6");
+    //const imgWater1 = document.querySelector("#img-water-1");
+    //const imgWater2 = document.querySelector("#img-water-2");
+    //const winHeight = window.innerHeight;
+    //
+    //const stage = new Stage();
+    //const touch = new Sign(167, winHeight - 70, 40, 60, imgTouch);
+    //const star = new Star(winHeight - 180, 145, 30, 30, imgStar);
+    //
+    //const barrier_one_bl = new Block(0, winHeight - 300, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
+    //const barrier_one_br = new Block(240, winHeight - 300, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+    //const barrier_one_sign = new Sign(110, winHeight - 350, 100, 13, imgT1);
+    //const barrier_one_tl = new Block(0, winHeight - 400, 80, 13, imgRope, true, 40, 120, [[110, 120]]);
+    //const barrier_one_tr = new Block(240, winHeight - 400, 80, 13, imgRope, false, 200, 280, [[200, 215]]);
+    ///* 第一关的五个东西 */
+    //
+    //const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, 0.02, [[0.7, 2.4]], [[3.9, 5.5]]);
+    //const barrier_two_sign = new Sign(125, winHeight - 660, 80, 13, imgT2);
+    ///* 第二关 一个圆 */
+    //
+    //
+    //const barrier_three = new Circle(60, winHeight - 1100, 200, 200, imgC2, 0, 0.01, [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]], [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]);
+    //const barrier_three_sign = new Sign(130, winHeight - 1000, 80, 13, imgT3);
+    ///* 第三关 一个圆 */
+    //
+    //const barrier_four = new Circle(60, winHeight - 1500, 200, 200, imgC3, 0, 0.02, [[0.5, 1.6], [2.6, 3.7], [4.7, 5.7]], [[0, 0.5], [1.6, 2.6], [3.7, 4.7], [5.75, 7]]);
+    //const barrier_four_sign = new Sign(125, winHeight - 1400, 80, 13, imgT4);
+    ///* 第四关 一个圆 */
+    //
+    //const barrier_five = new Circle(60, winHeight - 2000, 215, 300, imgC4, 0, 0.04, [[1.1, 3.1], [4.2, 6.2]], [[1.1, 3.1], [4.2, 6.2]]);
+    //const barrier_five_sign = new Sign(80, winHeight - 1850, 130, 13, imgT5);
+    ///* 第五关 一个圆 */
+    //
+    //const barrier_six_b = new Block(0, winHeight - 2100, 100, 21, imgGrass, true, 50, 270, [[110, 210]]);
+    //const barrier_six_t = new Block(220, winHeight - 2250, 100, 26, imgMountain, true, 50, 270, [[110, 210]]);
+    //const barrier_six_sign = new Sign(110, winHeight - 2170, 130, 13, imgT6);
+    ///* 第六关 雪山和草地 */
+    //
+    //const barrier_seven_b = new Block(0, winHeight - 2400, 100, 21, imgWater1, true, 50, 270, [[110, 210]]);
+    //const barrier_seven_t = new Block(220, winHeight - 2500, 100, 21, imgWater2, true, 50, 270, [[110, 210]]);
+    ////const barrier_seven_sign = new Sign(110, winHeight - 2430, 130, 13, imgT6);
+    ///* 第七关 强渡乌江 */
 
     stage.refresh();
 
