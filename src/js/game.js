@@ -82,7 +82,7 @@ $(document).ready(() => {
         touchTimer: null,
         currentLevel: 0,
         rolled: 0,
-        renderBarrier: [0, 5],
+        renderBarrier: [0, 6],
         judgeRender () {
             //if (this.rolled >= 120 && this.rolled < 410) {
             //    this.renderBarrier = [1, 2];
@@ -170,8 +170,17 @@ $(document).ready(() => {
 
         [
             'barrier_five.rotate()',
-            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 22)',
-            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 22)'
+            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 20)',
+            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 20)',
+            'barrier_five_sign.paint()'
+        ],
+
+        [
+            'barrier_six_b.move()',
+            'barrier_six_t.move()',
+            'star.collision(barrier_six_b.testPoint, barrier_six_b.isClose, 18)',
+            'star.collision(barrier_six_t.testPoint, barrier_six_t.isClose, 18)',
+            'barrier_six_sign.paint()'
         ]
 
     ];
@@ -564,6 +573,12 @@ $(document).ready(() => {
     const imgC3 = document.querySelector("#img-circle-3");
     const imgT4 = document.querySelector("#img-title-4");
     const imgC4 = document.querySelector("#img-circle-4");
+    const imgT5 = document.querySelector("#img-title-5");
+    const imgGrass = document.querySelector("#img-grass");
+    const imgMountain = document.querySelector("#img-mountain");
+    const imgT6 = document.querySelector("#img-title-6");
+    const imgWater1 = document.querySelector("#img-water-1");
+    const imgWater2 = document.querySelector("#img-water-2");
     const winHeight = window.innerHeight;
 
     const stage = new Stage();
@@ -590,8 +605,18 @@ $(document).ready(() => {
     const barrier_four_sign = new Sign(125, winHeight - 1400, 80, 13, imgT4);
     /* 第四关 一个圆 */
 
-    const barrier_five = new Circle(60, winHeight - 2000, 215, 300, imgC4, 0, 0.04, [[1, 3], [4.3, 6.15]], [[1, 3], [4.3, 6.15]]);
+    const barrier_five = new Circle(60, winHeight - 2000, 215, 300, imgC4, 0, 0.04, [[1.1, 3.1], [4.2, 6.2]], [[1.1, 3.1], [4.2, 6.2]]);
+    const barrier_five_sign = new Sign(80, winHeight - 1850, 130, 13, imgT5);
     /* 第五关 一个圆 */
+
+    const barrier_six_b = new Block(0, winHeight - 2100, 100, 21, imgGrass, true, 50, 270, [[110, 210]]);
+    const barrier_six_t = new Block(220, winHeight - 2200, 100, 26, imgMountain, true, 50, 270, [[110, 210]]);
+    const barrier_six_sign = new Sign(110, winHeight - 2130, 130, 13, imgT6);
+    /* 第六关 雪山和草地 */
+
+    const barrier_seven_b = new Block(0, winHeight - 2300, 100, 21, imgWater1, true, 50, 270, [[110, 210]]);
+    const barrier_seven_t = new Block(0, winHeight - 2400, 100, 21, imgWater2, true, 50, 270, [[110, 210]]);
+    /* 第七关 强渡乌江 */
 
     stage.refresh();
 
