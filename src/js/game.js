@@ -162,6 +162,9 @@ $(document).ready(() => {
                 ":" + localStorage.breakOut_second +
                 ":" + localStorage.breakOut_msec
             );
+            setTimeout(function () {
+                window.location.reload();
+            }, 2000);
             /*
             *   测试用
             * */
