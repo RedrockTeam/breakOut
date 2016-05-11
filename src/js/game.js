@@ -163,7 +163,7 @@ $(document).ready(() => {
                 ":" + localStorage.breakOut_msec
             );
             setTimeout(function () {
-                window.location.reload();
+                window.location.href = './game.html';
             }, 2000);
             /*
             *   测试用
