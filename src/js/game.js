@@ -164,7 +164,7 @@ $(document).ready(() => {
             );
             setTimeout(function () {
                 window.location.href = './game.html';
-            }, 2000);
+            }, 1000);
             /*
             *   测试用
             * */
@@ -237,7 +237,7 @@ $(document).ready(() => {
             'barrier_seven_mountain.move()',
             'barrier_seven_grass.move()',
             'sign_seven.paint()',
-            'star.collision(barrier_seven_mountain, barrier_seven_mountain.isClose, 18)',
+            'star.collision(barrier_seven_mountain.testPoint, barrier_seven_mountain.isClose, 18)',
             'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
         ],
 
