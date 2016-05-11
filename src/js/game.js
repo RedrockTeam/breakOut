@@ -141,60 +141,60 @@ $(document).ready(() => {
             'barrier_one_br.move()',
             'barrier_one_tr.move()',
             'barrier_one_tl.move()',
-            'sign_one.paint()'
-            //'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
-            //'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
+            'sign_one.paint()',
+            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
+            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
         ],
 
         [
             'barrier_two_b.move()',
             'barrier_two_t.move()',
-            'sign_two.paint()'
-            //'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 20)',
-            //'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 20)'
+            'sign_two.paint()',
+            'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 20)',
+            'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 20)'
         ],
 
         [
             'barrier_three.rotate()',
-            'sign_three.paint()'
-            //'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 24)',
-            //'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 24)'
+            'sign_three.paint()',
+            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 24)',
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 24)'
         ],
 
         [
             'barrier_four.rotate()',
-            'sign_four.paint()'
-            //'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 24)',
-            //'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 24)'
+            'sign_four.paint()',
+            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
+            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 24)'
         ],
 
         [
             'barrier_five.rotate()',
-            'sign_five.paint()'
-            //'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24)',
-            //'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 24)'
+            'sign_five.paint()',
+            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24)',
+            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 24)'
         ],
 
         [
             'barrier_six.rotate()',
-            'sign_six.paint()'
-            //'star.collision(barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 24)',
-            //'star.collision(barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 24)'
+            'sign_six.paint()',
+            'star.collision(barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 24)',
+            'star.collision(barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 24)'
         ],
 
         [
             'barrier_seven_mountain.move()',
             'barrier_seven_grass.move()',
-            'sign_seven.paint()'
-            //'star.collision(barrier_seven_mountain, barrier_seven_mountain.isClose, 18)',
-            //'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
+            'sign_seven.paint()',
+            'star.collision(barrier_seven_mountain, barrier_seven_mountain.isClose, 18)',
+            'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
         ],
 
         [
             'barrier_eight.rotate()',
-            'sign_eight.paint()'
-            //'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 24)',
-            //'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 24)'
+            'sign_eight.paint()',
+            'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 24)',
+            'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 24)'
         ]
 
 
@@ -464,8 +464,6 @@ $(document).ready(() => {
             this.isClose = true;
             /* isClose 能否碰撞 */
 
-            /* 构造函数写完了都用解构赋值重新写一下 */
-            //[this.context, this.width, this.height, this.img, this.direction, this.left, this.top] = [...arguments];
         }
 
         paint () {
@@ -578,6 +576,24 @@ $(document).ready(() => {
      *   沿路的路标 下面的小手啥的
      * */
 
+    function randomCircleSpeed () {
+        let arr = [0.02, 0.025, 0.03, 0.035, 0.04];
+        let len = arr.length;
+
+        return arr[Math.floor(Math.random()*len)];
+    }
+    function randomBlockSpeed () {
+        let arr = [1.5, 1.7, 1.8, 2, 2.5, 3];
+        let len = arr.length;
+
+        return arr[Math.floor(Math.random()*len)];
+    }
+    /*
+    *   @params:
+    *       randomCircleSpeed: 随机返回圆形的旋转速度
+    *       randomBlockSpeed: 随机返回方块的移动速度
+    * */
+
     const winHeight = window.innerHeight;
     const stage = new Stage();
     const touch = new Sign({
@@ -609,7 +625,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: true,
-        speed: 1,
+        speed: 1.5,
         maxLeft: 40,
         maxRight: 120,
         zone: [[110, 120]]
@@ -621,7 +637,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: false,
-        speed: 1,
+        speed: 1.5,
         maxLeft: 200,
         maxRight: 280,
         zone: [[200, 215]]
@@ -633,7 +649,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: true,
-        speed: 1,
+        speed: 1.5,
         maxLeft: 40,
         maxRight: 120,
         zone: [[110, 120]]
@@ -645,7 +661,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: false,
-        speed: 1,
+        speed: 1.5,
         maxLeft: 200,
         maxRight: 280,
         zone: [[200, 215]]
@@ -668,31 +684,31 @@ $(document).ready(() => {
     * */
     const barrier_two_b = new Block({
         left: 0,
-        top: winHeight - 500,
+        top: winHeight - 530,
         width: 100,
         height: 21,
         img: document.querySelector("#img-water-1"),
         direction: true,
-        speed: 2,
+        speed: randomBlockSpeed(),
         maxLeft: 50,
         maxRight: 270,
         zone: [[110, 210]]
     });
     const barrier_two_t = new Block({
         left: 220,
-        top: winHeight - 600,
+        top: winHeight - 670,
         width: 100,
         height: 21,
         img: document.querySelector("#img-water-2"),
         direction: true,
-        speed: 2,
+        speed: barrier_two_b.speed,
         maxLeft: 50,
         maxRight: 270,
         zone: [[110, 210]]
     });
     const sign_two = new Sign({
         left: 130,
-        top: winHeight - 550,
+        top: winHeight - 600,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-2")
@@ -706,18 +722,18 @@ $(document).ready(() => {
     * */
     const barrier_three = new Circle({
         x: 60,
-        y: winHeight - 900,
+        y: winHeight - 1000,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-1"),
         rotateDegree: 0,
-        rotateSpeed: 0.02,
+        rotateSpeed: randomCircleSpeed(),
         zoneUp: [[0.7, 2.4]],
         zoneDown: [[3.9, 5.5]]
     });
     const sign_three = new Sign({
         left: 130,
-        top: winHeight - 800,
+        top: winHeight - 900,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-3")
@@ -730,7 +746,7 @@ $(document).ready(() => {
     * */
     const barrier_four = new Circle({
         x: 60,
-        y: winHeight - 1200,
+        y: winHeight - 1400,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-4"),
@@ -741,7 +757,7 @@ $(document).ready(() => {
     });
     const sign_four = new Sign({
         left: 130,
-        top: winHeight - 1100,
+        top: winHeight - 1300,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-4")
@@ -754,18 +770,18 @@ $(document).ready(() => {
      * */
     const barrier_five = new Circle({
         x: 60,
-        y: winHeight - 1500,
+        y: winHeight - 1700,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-3"),
         rotateDegree: 0,
-        rotateSpeed: 0.02,
+        rotateSpeed: randomCircleSpeed(),
         zoneUp: [[0.5, 1.6], [2.6, 3.7], [4.7, 5.7]],
         zoneDown: [[0, 0.5], [1.6, 2.6], [3.7, 4.7], [5.75, 7]]
     });
     const sign_five = new Sign({
         left: 120,
-        top: winHeight - 1400,
+        top: winHeight - 1600,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-5")
@@ -778,18 +794,18 @@ $(document).ready(() => {
     * */
     const barrier_six = new Circle({
         x: 60,
-        y: winHeight - 1900,
+        y: winHeight - 2150,
         width: 215,
         height: 300,
         img: document.querySelector("#img-circle-2"),
         rotateDegree: 0,
-        rotateSpeed: 0.03,
+        rotateSpeed: randomCircleSpeed(),
         zoneUp: [[1.1, 3.1], [4.2, 6.2]],
         zoneDown: [[1.1, 3.1], [4.2, 6.2]]
     });
     const sign_six = new Sign({
         left: 90,
-        top: winHeight - 1750,
+        top: winHeight - 2000,
         width: 100,
         height: 13,
         img: document.querySelector("#img-title-6")
@@ -802,31 +818,31 @@ $(document).ready(() => {
     * */
     const barrier_seven_mountain = new Block({
         left: 220,
-        top: winHeight - 2000,
+        top: winHeight - 2250,
         width: 100,
         height: 21,
         img: document.querySelector("#img-mountain"),
         direction: false,
-        speed: 2,
+        speed: 3,
         maxLeft: 50,
         maxRight: 270,
         zone: [[110, 210]]
     });
     const barrier_seven_grass = new Block({
         left: 0,
-        top: winHeight - 2100,
+        top: winHeight - 2350,
         width: 100,
         height: 21,
         img: document.querySelector("#img-grass"),
         direction: true,
-        speed: 2,
+        speed: 3,
         maxLeft: 50,
         maxRight: 270,
         zone: [[110, 210]]
     });
     const sign_seven = new Sign({
         left: 100,
-        top: winHeight - 2050,
+        top: winHeight - 2300,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-7")
@@ -840,18 +856,18 @@ $(document).ready(() => {
     * */
     const barrier_eight = new Circle({
         x: 60,
-        y: winHeight - 2400,
+        y: winHeight - 2650,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-1"),
         rotateDegree: 0,
-        rotateSpeed: 0.04,
+        rotateSpeed: 0.05,
         zoneUp: [[0.7, 2.4]],
         zoneDown: [[3.9, 5.5]]
     });
     const sign_eight = new Sign({
         left: 125,
-        top: winHeight - 2300,
+        top: winHeight - 2550,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-8")
@@ -860,6 +876,7 @@ $(document).ready(() => {
     *   第八关: 突破腊子口
     *   @params:
     *       barrier_eight: 圆环 (中间一个缺口的)
+    *       sign_eight: 关卡标志
     * */
 
     stage.refresh();
