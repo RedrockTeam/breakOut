@@ -82,7 +82,7 @@ $(document).ready(() => {
         touchTimer: null,
         currentLevel: 0,
         rolled: 0,
-        renderBarrier: [0, 7],
+        renderBarrier: [0, 3],
         judgeRender () {
             //if (this.rolled >= 120 && this.rolled < 410) {
             //    this.renderBarrier = [1, 2];
@@ -132,63 +132,68 @@ $(document).ready(() => {
      *   @renderBarrier 控制游戏需要渲染的关卡
      */
 
-    //let gameController = [
-    //    [
-    //        'touch.blink()'
-    //    ],
-    //
-    //    [
-    //        'barrier_one_sign.paint()',
-    //        'barrier_one_bl.move()',
-    //        'barrier_one_br.move()',
-    //        'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
-    //        'barrier_one_tr.move()',
-    //        'barrier_one_tl.move()',
-    //        'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
-    //    ],
-    //
-    //    [
-    //        'barrier_two_sign.paint()',
-    //        'barrier_two.rotate()',
-    //        'star.collision(barrier_two.testPoint.down.y, barrier_two.testPoint.down.status, 24)',
-    //        'star.collision(barrier_two.testPoint.up.y, barrier_two.testPoint.up.status, 24)'
-    //    ],
-    //
-    //    [
-    //        'barrier_three.rotate()',
-    //        'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
-    //        'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)',
-    //        'barrier_three_sign.paint()'
-    //    ],
-    //
-    //    [
-    //        'barrier_four.rotate()',
-    //        'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 22)',
-    //        'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 22)',
-    //        'barrier_four_sign.paint()'
-    //    ],
-    //
-    //    [
-    //        'barrier_five.rotate()',
-    //        'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 20)',
-    //        'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 20)',
-    //        'barrier_five_sign.paint()'
-    //    ],
-    //
-    //    [
-    //        'barrier_six_b.move()',
-    //        'barrier_six_t.move()',
-    //        'star.collision(barrier_six_b.testPoint, barrier_six_b.isClose, 18)',
-    //        'star.collision(barrier_six_t.testPoint, barrier_six_t.isClose, 18)',
-    //        'barrier_six_sign.paint()'
-    //    ],
-    //
-    //    [
-    //        'barrier_seven_b.move()',
-    //        'barrier_seven_t.move()'
-    //    ]
-    //
-    //];
+    let gameController = [
+        [
+            'touch.blink()'
+        ],
+
+        [
+            'barrier_one_bl.move()',
+            'barrier_one_br.move()',
+            'barrier_one_tr.move()',
+            'barrier_one_tl.move()',
+            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
+            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
+        ],
+
+        [
+            'barrier_two_b.move()',
+            'barrier_two_t.move()',
+            'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 20)',
+            'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 20)'
+        ],
+
+        [
+            'barrier_three.rotate()',
+            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 24)',
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 24)'
+        ],
+
+        [
+            'barrier_three.rotate()',
+            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)',
+            'barrier_three_sign.paint()'
+        ],
+
+        [
+            'barrier_four.rotate()',
+            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 22)',
+            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 22)',
+            'barrier_four_sign.paint()'
+        ],
+
+        [
+            'barrier_five.rotate()',
+            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 20)',
+            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 20)',
+            'barrier_five_sign.paint()'
+        ],
+
+        [
+            'barrier_six_b.move()',
+            'barrier_six_t.move()',
+            'star.collision(barrier_six_b.testPoint, barrier_six_b.isClose, 18)',
+            'star.collision(barrier_six_t.testPoint, barrier_six_t.isClose, 18)',
+            'barrier_six_sign.paint()'
+        ],
+
+        [
+            'barrier_seven_b.move()',
+            'barrier_seven_t.move()'
+        ]
+
+    ];
     /*
      *   gameController
      *   二维数组, 第一维的每个元素代表关卡
@@ -650,6 +655,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: true,
+        speed: 1,
         maxLeft: 40,
         maxRight: 120,
         zone: [[110, 120]]
@@ -661,6 +667,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: false,
+        speed: 1,
         maxLeft: 200,
         maxRight: 280,
         zone: [[200, 215]]
@@ -672,6 +679,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: true,
+        speed: 1,
         maxLeft: 40,
         maxRight: 120,
         zone: [[110, 120]]
@@ -683,95 +691,118 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: false,
+        speed: 1,
         maxLeft: 200,
         maxRight: 280,
         zone: [[200, 215]]
     });
-    const barrier_two = new Circle({
+    const barrier_two_b = new Block({
+        left: 0,
+        top: winHeight - 500,
+        width: 100,
+        height: 21,
+        img: document.querySelector("#img-water-1"),
+        direction: true,
+        speed: 2,
+        maxLeft: 50,
+        maxRight: 270,
+        zone: [[110, 210]]
+    });
+    const barrier_two_t = new Block({
+        left: 220,
+        top: winHeight - 600,
+        width: 100,
+        height: 21,
+        img: document.querySelector("#img-water-2"),
+        direction: true,
+        speed: 2,
+        maxLeft: 50,
+        maxRight: 270,
+        zone: [[110, 210]]
+    });
+    const barrier_three = new Circle({
         x: 60,
-        y: winHeight - 750,
+        y: winHeight - 900,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-1"),
         rotateDegree: 0,
+        rotateSpeed: 0.02,
         zoneUp: [[0.7, 2.4]],
-        zoneDown: [[3.9, 5.5]],
-        rotateSpeed: 0.02
+        zoneDown: [[3.9, 5.5]]
     });
 
-    //new Circle(60, winHeight - 750, 200, 200, imgC1, 0, 0.02, [[0.7, 2.4]], [[3.9, 5.5]]);
-    //constructor (obj) {
-    //    this.context = pub.context;
-    //
-    //    this.start = {
-    //        x: obj.x,
-    //        y: obj.y
-    //    };
-    //
-    //    this.width = obj.width;
-    //    this.height = obj.height;
-    //    this.img = obj.img;
-    //    this.rotateDeg = obj.rotateDegree;
-    //    this.initDegree = obj.rotateDegree;
-    //    this.testPoint = {
-    //        up: {
-    //            y: this.start.y + 10,
-    //            zone: obj.zoneUp,
-    //            status: true
-    //        },
-    //        down: {
-    //            y: this.start.y - 10 + this.height,
-    //            zone: obj.zoneDown,
-    //            status: true
-    //        }
-    //    };
-    //    this.rotateSpeed = obj.rotateSpeed;
-    //}
-
+//const barrier_two = new Circle(60, winHeight - 750, 200, 200, imgC1, 0, 0.02, [[0.7, 2.4]], [[3.9, 5.5]]);
+//    constructor (obj) {
+//        this.context = pub.context;
+//
+//        this.start = {
+//            x: obj.x,
+//            y: obj.y
+//        };
+//
+//        this.width = obj.width;
+//        this.height = obj.height;
+//        this.img = obj.img;
+//        this.rotateDeg = obj.rotateDegree;
+//        this.initDegree = obj.rotateDegree;
+//        this.testPoint = {
+//            up: {
+//                y: this.start.y + 10,
+//                zone: obj.zoneUp,
+//                status: true
+//            },
+//            down: {
+//                y: this.start.y - 10 + this.height,
+//                zone: obj.zoneDown,
+//                status: true
+//            }
+//        };
+//        this.rotateSpeed = obj.rotateSpeed;
+//    }
 
     stage.refresh();
 
     window.setTimeout(() => {
-        // barrier_one_bl.paint();
-        // barrier_one_br.paint();
-        // barrier_one_sign.paint();
-        // barrier_one_tl.paint();
-        // barrier_one_tr.paint();
-        // barrier_two.paint();
-        // barrier_three.paint();
-        // star.paint();
+        barrier_one_bl.paint();
+        barrier_one_br.paint();
+        barrier_one_tl.paint();
+        barrier_one_tr.paint();
+        barrier_two_b.paint();
+        barrier_two_t.paint();
+        star.paint();
     }, 200);
 
     pub.touchTimer = window.setInterval(function () {
-        // touch.blinkErase();
-        // touch.blink();
+         touch.blinkErase();
+         touch.blink();
     }, 1000/60);
 
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
-    // $("#container").on("touchstart", function () {
+     $("#container").on("touchstart", function () {
 
-    //     if (pub.run === false) {
+         if (pub.run === false) {
 
-    //         window.clearInterval(pub.touchTimer);
-    //         /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+             window.clearInterval(pub.touchTimer);
+             /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
 
-    //         controller.timer = window.setInterval(() => {
-    //             gameTimer.run();
-    //             $gameTimer.text(gameTimer.getTime());
-    //         }, 50);
-    //         /* 不是 canvas 部分的计时器 */
+             controller.timer = window.setInterval(() => {
+                 gameTimer.run();
+                 $gameTimer.text(gameTimer.getTime());
+             }, 50);
+             /* 不是 canvas 部分的计时器 */
 
-    //         controller.startTime = new Date();
-    //         /* 真正的游戏计时器 */
+             controller.startTime = new Date();
+             /* 真正的游戏计时器 */
 
-    //         $(document).on('touchstart', function () {
-    //             star.jump();
-    //         });
+             $(document).on('touchstart', function () {
+                 star.jump();
+             });
 
-    //         stage.run();
-    //         pub.run = true;
-    //         pub.isStart = true;
-    //     }
-    // });
+             stage.run();
+             pub.run = true;
+             pub.isStart = true;
+         }
+     });
 });
