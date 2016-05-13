@@ -3,11 +3,9 @@
   padding: 0;
 }
 html {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Arial, "Hiragino Sans GB", "Microsoft YaHei",
+  "WenQuanYi Micro Hei", sans-serif;
 }
-/*
-* 日常样式重置 字体设置
-*/
 html, body{
   height: 100%;
   position: relative;
@@ -19,7 +17,6 @@ html, body{
 body{
   background: url(../imgs/result-background.png) no-repeat;
   background-size: 100%;
-  font-family: 'Microsoft YaHei';
 }
 @font-face {
   font-family: 'hkhb';
@@ -27,7 +24,6 @@ body{
   font-weight: normal;
   font-style: normal;
 }
-
 .cover {
   top: 0;
   left: 0;
@@ -36,240 +32,151 @@ body{
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 100;
+  transition: transform 1s;
   .title {
-    width: 40%;
-    height: 10%;
-    margin: 0 auto;
-    margin-top: 38%;
+    margin: 4rem auto .5rem auto;
+    width: 4rem;
+    height: 1rem;
     background: url(../imgs/result-inputMsg.png) no-repeat;
     background-size: 100%;
   }
   .rect {
     margin: 0 auto;
-    width: 80%;
-    height: 30%;
+    width: 8rem;
+    height: 5.5rem;
     background-color: #fffac9;
-    border: 6px solid #fc9b1e;
-    border-radius: 20px;
+    border: .2rem solid #fc9b1e;
+    border-radius: .5rem;
   }
   input {
     display: block;
-    margin: 0 auto;
-    width: 85%;
-    height: 20%;
-    margin-top: 15%;
-    border-radius: 8px;
+    margin: 1.2rem auto .8rem auto;
+    width: 7rem;
+    line-height: 1.2rem;
+    border-radius: .3rem;
     border: 0;
-    font-size: 12px;
-    padding: 0 10px;
+    font-size: .5rem;
+    padding: 0 6px;
   }
   input:focus{
     -webkit-tap-highlight-color:rgba(0,0,0,0);
     -webkit-user-modify:read-write-plaintext-only;
   }
-
   .btns {
-    margin-top: 10%;
     overflow: hidden;
+
+    div {
+      width: 3.5rem;
+      height: 1.5rem;
+    }
     .tel-back {
+      margin-left: .3rem;
       float: left;
-      margin-left: 5%;
-      width: 42%;
-      height: 50px;
       background: url(../imgs/result-phone-return.png) no-repeat;
       background-size: 100%;
     }
     .tel-submit {
+      margin-right: .1rem;
       float: right;
-      margin-right: 5%;
-      width: 42%;
-      height: 50px;
       background: url(../imgs/result-phone-submit.png) no-repeat;
       background-size: 100%;
     }
   }
 }
 
+.cover-hide {
+  transform: translate3d(0, -100%, 0);
+}
+/*
+  遮罩层部分
+*/
+
 .banner {
-  width: 75%;
-  height: 17%;
-  margin: 0 auto;
-  margin-top: 20%;
+  width: 7.5rem;
+  height: 3rem;
+  margin: 2rem auto 0 auto;
   overflow: hidden;
   background: url(../imgs/result-over.png) no-repeat;
   background-size: 100%;
-  @media (min-width: 360px) {
-    margin-top: 17%;
-  }
-  @media (min-width: 375px) and (min-height: 660px) {
-    margin-top: 22%;
-    width: 72%;
-    height: 16%;
-  }
 }
 .block {
-  width: 80%;
-  height: 45%;
+  width: 8rem;
+  height: 8rem;
   margin: 0 auto;
   background-color: #fffac9;
   border: 6px solid #fc9b1e;
   border-radius: 20px;
   text-align: center;
   font-family: 'hkhb';
-  @media (min-width: 360px) {
-    width: 75%;
-  }
-  @media (min-width: 375px) {
-    height: 43%;
-  }
   .range {
     margin-top: 5%;
-    font-size: 20px;
-    line-height: 30px;
-    @media (min-width: 360px) {
-      margin-top: 4%;
-      font-size: 23px;
-    }
-    @media (min-width: 410px) {
-      margin-top: 6%;
-      font-size: 30px;
-    }
+    font-size: 1rem;
+    line-height: 1rem;
   }
   .time {
-    font-size: 20px;
-    line-height: 30px;
-    @media (min-width: 360px) {
-      font-size: 23px;
-      line-height: 35px;
-    }
-    @media (min-width: 410px) {
-      font-size: 30px;
-      line-height: 40px;
-    }
+    font-size: 1rem;
+    line-height: 1rem;
   }
   .number {
     color: #ff7800;
-    letter-spacing: -1px;
-    word-spacing: -1px;
+    letter-spacing: -3px;
+    word-spacing: -5px;
     text-shadow: 2px 2px 2px #f9dc50;
   }
   .chinese {
-    font-size: 20px;
+    font-size: .8rem;
     color: #d06100;
-    @media (min-width: 360px) {
-      font-size: 22px;
-    }
-    @media (min-width: 410px) {
-      font-size: 24px;
-    }
   }
-  /*
-    坑爹的字体
-  */
   .title {
     color: #c76611;
-    margin-top: 3%;
-    font-size: 13px;
-    line-height: 15px;
+    margin-top: .3rem;
+    margin-bottom: .2rem;
+    font-size: .5rem;
+    line-height: .5rem;
     .star {
       display: inline-block;
-      width: 10px;
-      height: 10px;
+      width: .3rem;
+      height: .3rem;
       background: url(../imgs/result-star.png) no-repeat;
       background-size: 100%;
     }
     span {
       margin-left: 5px;
     }
-    @media (min-width: 360px) {
-      font-size: 15px;
-      .star {
-        width: 12px;
-        height: 12px;
-      }
-    }
-    @media (min-width: 410px) {
-      font-size: 16px;
-      .star {
-        width: 13px;
-        height: 13px;
-      }
-    }
   }
   /*
     title 部分
   */
   .text {
-    width: 95%;
-    height: 57%;
+    width: 7.5rem;
+    height: 4rem;
     margin: 0 auto;
-    margin-top: 3%;
     overflow: scroll;
     .story {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 12px;
-      letter-spacing: .7px;
+      font-family: Arial, "Hiragino Sans GB", "Microsoft YaHei",
+      "WenQuanYi Micro Hei", sans-serif;
+      font-size: .37rem;
       font-weight: 100;
       color: #cb701d;
       text-align: justify;
     }
-    @media (min-width: 360px) {
-      .story {
-        font-size: 13px;
-        line-height: 15px;
-      }
-    }
-    @media (min-width: 375px) {
-      width: 93%;
-      height: 55%;
-      .story {
-        font-size: 14px;
-        line-height: 16px;
-      }
-    }
-    @media (min-width: 410px) {
-      height: 53%;
-      .story {
-        font-size: 15px;
-        line-height: 17px;
-      }
-    }
   }
 }
-
 .buttons {
-  width: 85%;
-  margin: 0 auto;
-  margin-top: 5%;
+  width: 8.5rem;
+  margin: .5rem auto;
   .again {
     float: left;
-    width: 130px;
-    height: 60px;
+    width: 4rem;
+    height: 2rem;
     background: url(../imgs/result-again.png) no-repeat;
     background-size: 100%;
   }
   .submit {
     float: right;
-    width: 130px;
-    height: 60px;
+    width: 4rem;
+    height: 2rem;
     background: url(../imgs/result-submit.png) no-repeat;
     background-size: 100%;
-  }
-  @media (min-width: 360px) {
-    width: 82%;
-    .again {
-      width: 145px;
-    }
-    .submit {
-      width: 145px;
-    }
-  }
-  @media (min-width: 410px) {
-    .again {
-      width: 164px;
-    }
-    .submit {
-      width: 164px;
-    }
   }
 }
