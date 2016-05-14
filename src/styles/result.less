@@ -98,6 +98,10 @@ body{
   overflow: hidden;
   background: url(../imgs/result-over.png) no-repeat;
   background-size: 100%;
+  @media (min-aspect-ratio: 3/5) and (max-width: 360px) {
+    margin-top: 1rem;
+  }
+  //  辣鸡 iPhone4
 }
 .block {
   width: 8rem;
@@ -128,11 +132,14 @@ body{
     color: #d06100;
   }
   .title {
-    color: #c76611;
-    margin-top: .3rem;
-    margin-bottom: .2rem;
+    max-width: 7.5rem;
+    margin: .3rem auto .2rem auto;
     font-size: .5rem;
-    line-height: .5rem;
+    line-height: .6rem;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #c76611;
     .star {
       display: inline-block;
       width: .3rem;
@@ -168,14 +175,14 @@ body{
   .again {
     float: left;
     width: 4rem;
-    height: 2rem;
+    height: 1.5rem;
     background: url(../imgs/result-again.png) no-repeat;
     background-size: 100%;
   }
   .submit {
     float: right;
     width: 4rem;
-    height: 2rem;
+    height: 1.5rem;
     background: url(../imgs/result-submit.png) no-repeat;
     background-size: 100%;
   }

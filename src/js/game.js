@@ -146,6 +146,7 @@ $(document).ready(() => {
             controller.stopTimer();
             console.log("Game over");
 
+            localStorage.breakOut_score = pub.currentLevel;
             localStorage.breakOut_minute = parseInt(controller.totalTime/60000);
             localStorage.breakOut_second = parseInt((controller.totalTime%60000)/1000);
             localStorage.breakOut_msec = parseInt(controller.totalTime%60000%1000/10);
@@ -157,16 +158,21 @@ $(document).ready(() => {
             *       localStorage.breakOut_msec: 毫秒
             * */
 
-            alert("得分: " + pub.currentLevel +
-                " 时间: " + localStorage.breakOut_minute +
-                ":" + localStorage.breakOut_second +
-                ":" + localStorage.breakOut_msec
-            );
-            setTimeout(function () {
-                window.location.href = './game.html';
-            }, 1000);
+            //alert("得分: " + pub.currentLevel +
+            //    " 时间: " + localStorage.breakOut_minute +
+            //    ":" + localStorage.breakOut_second +
+            //    ":" + localStorage.breakOut_msec
+            //);
+            //setTimeout(function () {
+            //    window.location.href = './game.html';
+            //}, 1000);
             /*
             *   测试用
+            * */
+
+            window.location.href = './result.html';
+            /*
+            *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
             * */
         }
     };
