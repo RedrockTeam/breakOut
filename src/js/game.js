@@ -162,6 +162,11 @@ $(document).ready(() => {
             /*
             *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
             * */
+        },
+        isWin (star, finish) {
+            if (star.top <= finish.top + finish.height) {
+                this.gameOver();
+            }
         }
     };
     /*
@@ -849,6 +854,16 @@ $(document).ready(() => {
      *       barrier_eight: 圆环 (中间一个缺口的)
      *       sign_eight: 关卡标志
      * */
+    const sign_finish = new Sign({
+        left: 50,
+        top: winHeight - 2850,
+        width: 200,
+        height: 50,
+        img: document.querySelector("#img-finish")
+    });
+    /*
+    *   结束表示
+    * */
 
     let gameController = [
         [
@@ -917,10 +932,9 @@ $(document).ready(() => {
         ],
 
         [
-            // 给终点的
+            'sign_finish.paint()',
+            'pub.isWin(star, sign_finish)'
         ]
-
-
     ];
     /*
      *   gameController
