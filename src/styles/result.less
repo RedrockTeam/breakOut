@@ -33,6 +33,7 @@ body{
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 100;
   transition: transform 1s;
+  transform: translate3d(0, -100%, 0);
   .title {
     margin: 4rem auto .5rem auto;
     width: 4rem;
@@ -80,20 +81,21 @@ body{
       float: right;
       background: url(../imgs/result-phone-submit.png) no-repeat;
       background-size: 100%;
+      background-position: 0 20%;
     }
   }
 }
 
-.cover-hide {
-  transform: translate3d(0, -100%, 0);
+.cover-show {
+  transform: translate3d(0, 0, 0);
 }
 /*
   遮罩层部分
 */
 
 .banner {
-  width: 7.5rem;
-  height: 3rem;
+  width: 7rem;
+  height: 2.8rem;
   margin: 2rem auto 0 auto;
   overflow: hidden;
   background: url(../imgs/result-over.png) no-repeat;
@@ -104,8 +106,8 @@ body{
   //  辣鸡 iPhone4
 }
 .block {
-  width: 8rem;
-  height: 8rem;
+  width: 7.8rem;
+  height: 7.8rem;
   margin: 0 auto;
   background-color: #fffac9;
   border: 6px solid #fc9b1e;
@@ -114,17 +116,17 @@ body{
   font-family: 'hkhb';
   .range {
     margin-top: 5%;
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: .9rem;
+    line-height: .9rem;
   }
   .time {
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: .9rem;
+    line-height: .9rem;
   }
   .number {
     color: #ff7800;
     letter-spacing: -3px;
-    word-spacing: -5px;
+    word-spacing: -.15rem;
     text-shadow: 2px 2px 2px #f9dc50;
   }
   .chinese {
@@ -133,8 +135,8 @@ body{
   }
   .title {
     max-width: 7.5rem;
-    margin: .3rem auto .2rem auto;
-    font-size: .5rem;
+    margin: .3rem auto .1rem auto;
+    font-size: .4rem;
     line-height: .6rem;
     white-space:nowrap;
     overflow: hidden;
@@ -155,15 +157,14 @@ body{
     title 部分
   */
   .text {
-    width: 7.5rem;
+    width: 7.4rem;
     height: 4rem;
     margin: 0 auto;
     overflow: scroll;
     .story {
-      font-family: Arial, "Hiragino Sans GB", "Microsoft YaHei",
+      font-family: "Hiragino Sans GB", "Microsoft YaHei",
       "WenQuanYi Micro Hei", sans-serif;
       font-size: .37rem;
-      font-weight: 100;
       color: #cb701d;
       text-align: justify;
     }
@@ -174,14 +175,14 @@ body{
   margin: .5rem auto;
   .again {
     float: left;
-    width: 4rem;
+    width: 4.2rem;
     height: 1.5rem;
     background: url(../imgs/result-again.png) no-repeat;
     background-size: 100%;
   }
   .submit {
     float: right;
-    width: 4rem;
+    width: 4.2rem;
     height: 1.5rem;
     background: url(../imgs/result-submit.png) no-repeat;
     background-size: 100%;

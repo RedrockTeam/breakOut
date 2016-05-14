@@ -10,11 +10,9 @@
         }
     });
     document.querySelector("#start").addEventListener('touchstart', () => {
-        document.querySelector("#cover").className = 'cover';
         window.location.href = './game.html';
     });
     document.querySelector("#intro").addEventListener('touchstart', () => {
-        document.querySelector("#cover").className = 'cover';
         window.location.href = './intro.html';
     });
 })();

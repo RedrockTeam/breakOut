@@ -62,7 +62,7 @@ $(document).ready(() => {
     let controller = {
         timer: null,
         startTime: null,
-        totalTime: null,
+        totalTime: 0,
         stopTimer () {
             window.clearInterval(this.timer);
         }
@@ -134,7 +134,7 @@ $(document).ready(() => {
             window.clearInterval(this.timer);
         },
         gameOver () {
-            controller.totalTime = new Date() - controller.startTime;
+            controller.totalTime += new Date() - controller.startTime;
 
             console.log("Total time is: " +
                 parseInt(controller.totalTime/60000) +
@@ -143,7 +143,7 @@ $(document).ready(() => {
             console.log("Current level: " + pub.currentLevel);
 
             this.stopTimer();
-            controller.stopTimer();
+            //controller.stopTimer();
             console.log("Game over");
 
             localStorage.breakOut_score = pub.currentLevel;
@@ -156,18 +156,6 @@ $(document).ready(() => {
             *       localStorage.breakOut_minute: 分
             *       localStorage.breakOut_second: 秒
             *       localStorage.breakOut_msec: 毫秒
-            * */
-
-            //alert("得分: " + pub.currentLevel +
-            //    " 时间: " + localStorage.breakOut_minute +
-            //    ":" + localStorage.breakOut_second +
-            //    ":" + localStorage.breakOut_msec
-            //);
-            //setTimeout(function () {
-            //    window.location.href = './game.html';
-            //}, 1000);
-            /*
-            *   测试用
             * */
 
             window.location.href = './result.html';
@@ -567,7 +555,7 @@ $(document).ready(() => {
         return arr[Math.floor(Math.random()*len)];
     }
     function randomBlockSpeed () {
-        let arr = [1.5, 1.7, 1.8, 2, 2.5, 3];
+        let arr = [1.5, 1.7, 1.8, 2, 2.2, 2.5, 3];
         let len = arr.length;
 
         return arr[Math.floor(Math.random()*len)];
@@ -608,7 +596,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: true,
-        speed: 1.5,
+        speed: randomBlockSpeed() + .5,
         maxLeft: 40,
         maxRight: 120,
         zone: [[110, 120]]
@@ -620,7 +608,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: false,
-        speed: 1.5,
+        speed: barrier_one_bl.speed,
         maxLeft: 200,
         maxRight: 280,
         zone: [[200, 215]]
@@ -632,7 +620,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: true,
-        speed: 1.5,
+        speed: 3,
         maxLeft: 40,
         maxRight: 120,
         zone: [[110, 120]]
@@ -644,7 +632,7 @@ $(document).ready(() => {
         height: 13,
         img: document.querySelector("#img-rope"),
         direction: false,
-        speed: 1.5,
+        speed: barrier_one_tl.speed,
         maxLeft: 200,
         maxRight: 280,
         zone: [[200, 215]]
@@ -734,7 +722,7 @@ $(document).ready(() => {
         height: 200,
         img: document.querySelector("#img-circle-4"),
         rotateDegree: 0,
-        rotateSpeed: 0.02,
+        rotateSpeed: randomCircleSpeed() - .01,
         zoneUp: [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]],
         zoneDown: [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]
     });
@@ -818,7 +806,7 @@ $(document).ready(() => {
         height: 21,
         img: document.querySelector("#img-grass"),
         direction: true,
-        speed: 3,
+        speed: randomBlockSpeed() + .5,
         maxLeft: 50,
         maxRight: 270,
         zone: [[110, 210]]
@@ -844,7 +832,7 @@ $(document).ready(() => {
         height: 200,
         img: document.querySelector("#img-circle-1"),
         rotateDegree: 0,
-        rotateSpeed: 0.05,
+        rotateSpeed: randomCircleSpeed() + .02,
         zoneUp: [[0.7, 2.4]],
         zoneDown: [[3.9, 5.5]]
     });
@@ -896,7 +884,7 @@ $(document).ready(() => {
             'barrier_four.rotate()',
             'sign_four.paint()',
             'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
-            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 24)'
+            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20)'
         ],
 
         [
@@ -980,4 +968,36 @@ $(document).ready(() => {
             pub.isStart = true;
         }
     });
+    /*
+    *   触发游戏开始的
+    * */
+    $("#pause").on('touchstart', () => {
+        if (pub.run) {
+            controller.totalTime += new Date() - controller.startTime;
+            controller.startTime = null;
+
+            pub.stopTimer();
+            controller.stopTimer();
+            $("#cover").addClass("cover-show");
+
+            console.log(controller.totalTime);
+        }
+    });
+    $("#restart").on('touchstart', () => {
+        window.location.href = './refresh.html';
+    });
+    $("#resume").on('touchstart', () => {
+        $("#cover").removeClass("cover-show");
+        setTimeout(() => {
+            stage.run();
+            controller.timer = window.setInterval(() => {
+                gameTimer.run();
+                $gameTimer.text(gameTimer.getTime());
+            }, 50);
+            controller.startTime = new Date();
+        }, 1000);
+    });
+    /*
+    *   暂停部分
+    * */
 });
