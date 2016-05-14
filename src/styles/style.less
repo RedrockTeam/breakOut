@@ -5,9 +5,13 @@
 html {
   font-family: Arial, "Hiragino Sans GB", "Microsoft YaHei",
   "WenQuanYi Micro Hei", sans-serif;
+  max-width: 640px;
+  max-height: 960px;
+  margin: 0 auto;
 }
 /*
 * 日常样式重置 字体设置
+* 最大支持的屏幕
 */
 body{
   background: url(../imgs/home-background.png) no-repeat;
@@ -17,6 +21,7 @@ body{
 .cover {
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
@@ -33,25 +38,24 @@ body{
   }
   .loading {
     position: absolute;
-    width: 6rem;
-    height: 6rem;
+    width: 3rem;
+    height: 3rem;
     background-color: #ff8a00;
     left: 50%;
     top: 30%;
-    margin-left: -3rem;
-    border-radius: 1rem;
+    margin-left: -1.5rem;
+    border-radius: .5rem;
     animation: load 3s infinite;
   }
   .words {
     position: absolute;
     width: 100%;
     top: 65%;
-    line-height: 1.5rem;
-    font-size: 1.5rem;
+    line-height: .8rem;
+    font-size: .8rem;
     font-weight: 100;
     color: #fff;
     text-align: center;
-    letter-spacing: .1rem;
   }
 }
 .cover-hide {
@@ -61,163 +65,68 @@ body{
   loading 界面
 */
 
-
-
-//.home {
-//  position: absolute;
-//  width: 100%;
-//  height: 100%;
-//  background: url(../imgs/home-background.png) no-repeat;
-//  background-size: 100%;
-//  @keyframes bounce {
-//    60% {
-//      transform: scale(1.1);
-//    }
-//    100% {
-//      transform: scale(1);
-//    }
-//  }
-//  .banner-bounce {
-//    animation: bounce .5s;
-//  }
-//  /*
-//  * banner 弹一下的动画效果
-//  */
-//  .banner {
-//    width: 70%;
-//    height: 66%;
-//    margin: 0 auto;
-//    margin-top: 8%;
-//    background: url(../imgs/home-banner.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  @media (min-aspect-ratio: 3/5) {
-//    .banner {
-//      width: 60%;
-//      height: 65%;
-//      margin-top: 5%;
-//    }
-//  }
-//  @media (min-aspect-ratio: 3/5) and (min-width: 380px) {
-//    .banner {
-//      width: 60%;
-//      height: 60%;
-//      margin-top: 10%;
-//    }
-//  }
-//  /*
-//  * 对于一些宽高比不是很正常的手机
-//  * 比如 iphone4 nexus4 啥的
-//  * 调整一下 banner 图的大小
-//  */
-//  .stars-1 {
-//    position: absolute;
-//    width: 25px;
-//    height: 65px;
-//    left: 10%;
-//    top: 45%;
-//    background: url(../imgs/stars_1.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  .stars-2 {
-//    position: absolute;
-//    width: 35px;
-//    height: 100px;
-//    right: 6%;
-//    top: 25%;
-//    background: url(../imgs/stars_2.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  .stars-3 {
-//    position: absolute;
-//    width: 20px;
-//    height: 20px;
-//    right: 12%;
-//    top: 55.5%;
-//    background: url(../imgs/stars_3.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  .stars-4 {
-//    position: absolute;
-//    width: 30px;
-//    height: 33px;
-//    right: 22%;
-//    top: 78%;
-//    background: url(../imgs/stars_4.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  .rotate-linear {
-//    animation: star_rotate  2s linear infinite;
-//  }
-//  @keyframes star_rotate {
-//    50% {
-//      transform: rotate(180deg);
-//    }
-//    100% {
-//      transform: rotate(360deg);
-//    }
-//  }
-//  /*
-//  * 小星星
-//  * 只有一个会转的
-//  */
-//
-//  .start {
-//    position: relative;
-//    top: 0;
-//    transform: translate3d(0, 200px, 0);
-//    left: 50%;
-//    margin-left: -83px;
-//    width: 167px;
-//    height: 60px;
-//    background: url(../imgs/start.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  .intro {
-//    position: relative;
-//    top: 10px;
-//    transform: translate3d(0, 200px, 0);
-//    left: 50%;
-//    margin-left: -83px;
-//    width: 167px;
-//    height: 60px;
-//    background: url(../imgs/intro.png) no-repeat;
-//    background-size: 100%;
-//  }
-//  .start-after {
-//    transition: transform 1s;
-//    transform: translate3d(0, 0, 0) !important;
-//  }
-//  .intro-after {
-//    transition: transform 1.2s;
-//    transform: translate3d(0, 0, 0) !important;
-//  }
-//  @media (min-width: 360px) {
-//    .start {
-//      margin-left: -93px;
-//      width: 185px;
-//      height: 67px;
-//    }
-//    .intro {
-//      margin-left: -93px;
-//      width: 185px;
-//      height: 67px;
-//    }
-//  }
-//  @media (min-height: 640px) {
-//    .start {
-//      transform: translate3d(0, 300px, 0);
-//    }
-//    .intro {
-//      transform: translate3d(0, 300px, 0);
-//    }
-//  }
-//  @media (min-height: 850px) {
-//    .start {
-//      transform: translate3d(0, 350px, 0);
-//    }
-//    .intro {
-//      transform: translate3d(0, 350px, 0);
-//    }
-//  }
-//}
+.home {
+  .banner {
+    width: 7rem;
+    height: 10rem;
+    margin: 2rem auto .6rem auto;
+    background: url(../imgs/home-banner.png) no-repeat;
+    background-size: 100%;
+  }
+  @media (min-aspect-ratio: 3/5) and (max-width: 360px) {
+    .banner {
+      width: 6rem;
+      height: 9rem;
+      margin: 1rem auto .6rem auto;
+    }
+  }
+  @media (min-aspect-ratio: 3/5) and (min-width: 600px) {
+    .banner {
+      width: 6rem;
+      height: 9rem;
+      margin: 3rem auto .6rem auto;
+    }
+  }
+  //  辣鸡 iPhone4 Nexus7 Nexus4
+  @keyframes bounce {
+    60% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .banner-bounce {
+    animation: bounce .5s;
+  }
+  .start {
+    position: relative;
+    top: 0;
+    left: 50%;
+    margin-left: -2.3rem;
+    width: 4.6rem;
+    height: 1.6rem;
+    background: url(../imgs/start.png) no-repeat;
+    background-size: 100%;
+    transform: translate3d(0, 6.5rem, 0) !important;
+  }
+  .intro {
+    position: relative;
+    top: .4rem;
+    left: 50%;
+    margin-left: -2.3rem;
+    width: 4.6rem;
+    height: 1.6rem;
+    background: url(../imgs/intro.png) no-repeat;
+    background-size: 100%;
+    transform: translate3d(0, 6.5rem, 0) !important;
+  }
+  .start-after {
+    transition: transform 1.2s;
+    transform: translate3d(0, 0, 0) !important;
+  }
+  .intro-after {
+    transition: transform 1.4s;
+    transform: translate3d(0, 0, 0) !important;
+  }
+}

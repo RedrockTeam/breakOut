@@ -4,7 +4,6 @@
             document.querySelector("#cover").className += " cover-hide";
             setTimeout(() => {
                 document.querySelector("#banner").className += " banner-bounce";
-                document.querySelector(".stars-3").className += " rotate-linear";
                 document.querySelector("#start").className += " start-after";
                 document.querySelector("#intro").className += " intro-after";
             }, 1000);
