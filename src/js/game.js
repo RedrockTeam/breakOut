@@ -477,40 +477,6 @@ $(document).ready(() => {
      *   左右移动小方块的构造函数
      * */
 
-    class Food {
-        constructor (obj) {
-            this.context = pub.context;
-
-            this.left = obj.left;
-            this.top = obj.top;
-            this.width = obj.width;
-            this.height = obj.height;
-            this.img = obj.img;
-            this.isAte = false;
-        }
-
-        paint () {
-            this.context.drawImage(this.img, this.left, this.top);
-        }
-
-        eat (starY) {
-            var centerY = this.top + this.height / 2;
-            console.log(centerY);
-
-            if (Math.abs(centerY - starY) < 5) {
-                this.isAte = true;
-            }
-
-            if (!this.isAte) {
-                this.paint();
-            }
-        }
-    }
-    /*
-     *   Food
-     *   食物的构造函数
-     * */
-
     class Sign {
         constructor (obj) {
             this.context = pub.context;
