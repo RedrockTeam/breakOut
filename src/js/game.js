@@ -84,22 +84,22 @@ $(document).ready(() => {
         rolled: 0,
         renderBarrier: [0, 3],
         barrierHeightArr: [
-            winHeight - 400 - 15,
-            winHeight - 670 - 15,
-            winHeight - 1000 - 15,
-            winHeight - 1400 - 15,
-            winHeight - 1700 - 15,
-            winHeight - 2150 - 15,
-            winHeight - 2350 - 15,
-            winHeight - 2650 - 15
+            winHeight - 500 - 15,
+            winHeight - 800 - 15,
+            winHeight - 1200 - 15,
+            winHeight - 1550 - 15,
+            winHeight - 1900 - 15,
+            winHeight - 2300 - 15,
+            winHeight - 2500 - 15,
+            winHeight - 2800 - 15
         ],
         judgeRenderArr: [
-            [120, 410],
-            [410, 680],
-            [680, 1000],
-            [1000, 1400],
-            [1400, 1700],
-            [1700, 3000]
+            [150, 510],
+            [510, 800],
+            [800, 1200],
+            [1200, 1600],
+            [1600, 1900],
+            [1900, 2500]
         ],
         judgeRender () {
             let rolled = this.rolled;
@@ -151,17 +151,17 @@ $(document).ready(() => {
             localStorage.breakOut_second = parseInt((controller.totalTime%60000)/1000);
             localStorage.breakOut_msec = parseInt(controller.totalTime%60000%1000/10);
             /*
-            *   因为结果页面有跳转, 所以用 localStorage 暂存一下数据
-            *   @params:
-            *       localStorage.breakOut_minute: 分
-            *       localStorage.breakOut_second: 秒
-            *       localStorage.breakOut_msec: 毫秒
-            * */
+             *   因为结果页面有跳转, 所以用 localStorage 暂存一下数据
+             *   @params:
+             *       localStorage.breakOut_minute: 分
+             *       localStorage.breakOut_second: 秒
+             *       localStorage.breakOut_msec: 毫秒
+             * */
 
             window.location.href = './result.html';
             /*
-            *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
-            * */
+             *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
+             * */
         },
         isWin (star, finish) {
             if (star.top <= finish.top + finish.height) {
@@ -242,7 +242,7 @@ $(document).ready(() => {
 
                 pub.judgeLevel();
 
-                //console.log(pub.rolled);
+                console.log(pub.rolled);
                 //console.log(star.top);
                 //console.log(pub.barrierHeightArr);
             }, 1000/60);
@@ -596,7 +596,7 @@ $(document).ready(() => {
      * */
     const barrier_one_bl = new Block({
         left: 0,
-        top: winHeight - 300,
+        top: winHeight - 350,
         width: 80,
         height: 13,
         img: document.querySelector("#img-rope"),
@@ -608,7 +608,7 @@ $(document).ready(() => {
     });
     const barrier_one_br = new Block({
         left: 240,
-        top: winHeight - 300,
+        top: winHeight - 350,
         width: 80,
         height: 13,
         img: document.querySelector("#img-rope"),
@@ -620,7 +620,7 @@ $(document).ready(() => {
     });
     const barrier_one_tl = new Block({
         left: 0,
-        top: winHeight - 400,
+        top: winHeight - 500,
         width: 80,
         height: 13,
         img: document.querySelector("#img-rope"),
@@ -632,7 +632,7 @@ $(document).ready(() => {
     });
     const barrier_one_tr = new Block({
         left: 240,
-        top: winHeight - 400,
+        top: winHeight - 500,
         width: 80,
         height: 13,
         img: document.querySelector("#img-rope"),
@@ -644,7 +644,7 @@ $(document).ready(() => {
     });
     const sign_one = new Sign({
         left: 115,
-        top: winHeight - 350,
+        top: winHeight - 425,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-1")
@@ -660,7 +660,7 @@ $(document).ready(() => {
      * */
     const barrier_two_b = new Block({
         left: 0,
-        top: winHeight - 530,
+        top: winHeight - 700,
         width: 100,
         height: 18,
         img: document.querySelector("#img-water-1"),
@@ -672,7 +672,7 @@ $(document).ready(() => {
     });
     const barrier_two_t = new Block({
         left: 220,
-        top: winHeight - 670,
+        top: winHeight - 800,
         width: 100,
         height: 18,
         img: document.querySelector("#img-water-2"),
@@ -684,7 +684,7 @@ $(document).ready(() => {
     });
     const sign_two = new Sign({
         left: 130,
-        top: winHeight - 600,
+        top: winHeight - 750,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-2")
@@ -697,19 +697,19 @@ $(document).ready(() => {
      *       sign_two: 关卡标志
      * */
     const barrier_three = new Circle({
-        x: 60,
-        y: winHeight - 1000,
-        width: 200,
-        height: 200,
+        x: 85,
+        y: winHeight - 1200,
+        width: 150,
+        height: 150,
         img: document.querySelector("#img-circle-1"),
         rotateDegree: 0,
         rotateSpeed: randomCircleSpeed(),
-        zoneUp: [[0.7, 2.4]],
+        zoneUp: [[0.8, 2.4]],
         zoneDown: [[3.9, 5.5]]
     });
     const sign_three = new Sign({
         left: 130,
-        top: winHeight - 900,
+        top: winHeight - 1125,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-3")
@@ -722,7 +722,7 @@ $(document).ready(() => {
      * */
     const barrier_four = new Circle({
         x: 60,
-        y: winHeight - 1400,
+        y: winHeight - 1550,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-4"),
@@ -733,7 +733,7 @@ $(document).ready(() => {
     });
     const sign_four = new Sign({
         left: 130,
-        top: winHeight - 1300,
+        top: winHeight - 1450,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-4")
@@ -746,7 +746,7 @@ $(document).ready(() => {
      * */
     const barrier_five = new Circle({
         x: 60,
-        y: winHeight - 1700,
+        y: winHeight - 1900,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-3"),
@@ -757,7 +757,7 @@ $(document).ready(() => {
     });
     const sign_five = new Sign({
         left: 120,
-        top: winHeight - 1600,
+        top: winHeight - 1800,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-5")
@@ -769,10 +769,10 @@ $(document).ready(() => {
      *       sign_five: 关卡标志
      * */
     const barrier_six = new Circle({
-        x: 60,
-        y: winHeight - 2150,
-        width: 215,
-        height: 300,
+        x: 88,
+        y: winHeight - 2300,
+        width: 144,
+        height: 200,
         img: document.querySelector("#img-circle-2"),
         rotateDegree: 0,
         rotateSpeed: randomCircleSpeed(),
@@ -780,8 +780,8 @@ $(document).ready(() => {
         zoneDown: [[1.1, 3.1], [4.2, 6.2]]
     });
     const sign_six = new Sign({
-        left: 90,
-        top: winHeight - 2000,
+        left: 85,
+        top: winHeight - 2200,
         width: 100,
         height: 13,
         img: document.querySelector("#img-title-6")
@@ -794,7 +794,7 @@ $(document).ready(() => {
      * */
     const barrier_seven_mountain = new Block({
         left: 220,
-        top: winHeight - 2250,
+        top: winHeight - 2400,
         width: 100,
         height: 21,
         img: document.querySelector("#img-mountain"),
@@ -806,7 +806,7 @@ $(document).ready(() => {
     });
     const barrier_seven_grass = new Block({
         left: 0,
-        top: winHeight - 2350,
+        top: winHeight - 2500,
         width: 100,
         height: 21,
         img: document.querySelector("#img-grass"),
@@ -818,7 +818,7 @@ $(document).ready(() => {
     });
     const sign_seven = new Sign({
         left: 100,
-        top: winHeight - 2300,
+        top: winHeight - 2450,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-7")
@@ -831,19 +831,19 @@ $(document).ready(() => {
      *       sign_seven: 关卡标志
      * */
     const barrier_eight = new Circle({
-        x: 60,
-        y: winHeight - 2650,
-        width: 200,
-        height: 200,
+        x: 85,
+        y: winHeight - 2800,
+        width: 150,
+        height: 150,
         img: document.querySelector("#img-circle-1"),
         rotateDegree: 0,
         rotateSpeed: randomCircleSpeed() + .02,
-        zoneUp: [[0.7, 2.4]],
+        zoneUp: [[0.8, 2.4]],
         zoneDown: [[3.9, 5.5]]
     });
     const sign_eight = new Sign({
         left: 125,
-        top: winHeight - 2550,
+        top: winHeight - 2725,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-8")
@@ -856,14 +856,14 @@ $(document).ready(() => {
      * */
     const sign_finish = new Sign({
         left: 50,
-        top: winHeight - 2850,
+        top: winHeight - 3000,
         width: 200,
         height: 50,
         img: document.querySelector("#img-finish")
     });
     /*
-    *   结束表示
-    * */
+     *   结束表示
+     * */
 
     let gameController = [
         [
@@ -891,8 +891,8 @@ $(document).ready(() => {
         [
             'barrier_three.rotate()',
             'sign_three.paint()',
-            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 24)',
-            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 24)'
+            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
         ],
 
         [
@@ -927,8 +927,8 @@ $(document).ready(() => {
         [
             'barrier_eight.rotate()',
             'sign_eight.paint()',
-            'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 24)',
-            'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 24)'
+            'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 20)',
+            'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 20)'
         ],
 
         [
@@ -983,8 +983,8 @@ $(document).ready(() => {
         }
     });
     /*
-    *   触发游戏开始的
-    * */
+     *   触发游戏开始的
+     * */
     $("#pause").on('touchstart', () => {
         if (pub.run) {
             controller.totalTime += new Date() - controller.startTime;
@@ -1012,6 +1012,6 @@ $(document).ready(() => {
         }, 1000);
     });
     /*
-    *   暂停部分
-    * */
+     *   暂停部分
+     * */
 });

@@ -6,6 +6,7 @@
                 document.querySelector("#banner").className += " banner-bounce";
                 document.querySelector("#start").className += " start-after";
                 document.querySelector("#intro").className += " intro-after";
+                document.querySelector("#redrock").className += " redrock-after";
             }, 1000);
         }
     });
