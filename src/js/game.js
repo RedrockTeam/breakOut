@@ -967,6 +967,9 @@ $(document).ready(() => {
             console.log(controller.totalTime);
         }
     });
+    $("#gohome").on('touchstart', () => {
+       window.location.href = './index.html';
+    });
     $("#resume").on('touchstart', () => {
         $("#cover").removeClass("cover-show");
         setTimeout(() => {

@@ -19,7 +19,6 @@ $(document).ready(() => {
     const $time = $("#time");
     const $title = $("#title");
     const $story = $("#story");
-    const $btn_again = $("#again");
     const $btn_submit = $("#submit");
     const $btn_tel_back = $("#tel-back");
     const $btn_tel_submit = $("#tel-submit");
