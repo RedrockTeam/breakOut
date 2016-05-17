@@ -846,59 +846,59 @@ $(document).ready(() => {
             'barrier_one_tr.move()',
             'barrier_one_tl.move()',
             'sign_one.paint()',
-            //'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
-            //'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
+            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
+            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
         ],
 
         [
             'barrier_two_b.move()',
             'barrier_two_t.move()',
             'sign_two.paint()',
-            //'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 20)',
-            //'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 20)'
+            'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 21)',
+            'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 21)'
         ],
 
         [
             'barrier_three.rotate()',
             'sign_three.paint()',
-            //'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
-            //'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
+            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
+            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
         ],
 
         [
             'barrier_four.rotate()',
             'sign_four.paint()',
-            //'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
-            //'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20)'
+            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
+            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20)'
         ],
 
         [
             'barrier_five.rotate()',
             'sign_five.paint()',
-            //'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24)',
-            //'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 24)'
+            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24)',
+            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 24)'
         ],
 
         [
             'barrier_six.rotate()',
             'sign_six.paint()',
-            //'star.collision(barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 20)',
-            //'star.collision(barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 20)'
+            'star.collision(barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 20)',
+            'star.collision(barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 20)'
         ],
 
         [
             'barrier_seven_mountain.move()',
             'barrier_seven_grass.move()',
             'sign_seven.paint()',
-            //'star.collision(barrier_seven_mountain.testPoint, barrier_seven_mountain.isClose, 18)',
-            //'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
+            'star.collision(barrier_seven_mountain.testPoint, barrier_seven_mountain.isClose, 18)',
+            'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
         ],
 
         [
             'barrier_eight.rotate()',
             'sign_eight.paint()',
-            //'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 20)',
-            //'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 20)'
+            'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 20)',
+            'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 20)'
         ],
 
         [
@@ -933,27 +933,30 @@ $(document).ready(() => {
 
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
-    $("#container").on("touchstart", function () {
-        if (pub.run === false) {
-            window.clearInterval(pub.touchTimer);
-            /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
-            controller.timer = window.setInterval(() => {
-                gameTimer.run();
-                $gameTimer.text(gameTimer.getTime());
-            }, 50);
-            /* 不是 canvas 部分的计时器 */
-            controller.startTime = new Date();
-            /* 真正的游戏计时器 */
-            $(document).on('touchstart', function () {
-                star.jump();
-            });
-            stage.run();
-            pub.run = true;
-            pub.isStart = true;
-        }
-    });
+    window.setTimeout(() => {
+        $("#container").on("touchstart", function () {
+            if (pub.run === false) {
+                window.clearInterval(pub.touchTimer);
+                /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+                controller.timer = window.setInterval(() => {
+                    gameTimer.run();
+                    $gameTimer.text(gameTimer.getTime());
+                }, 50);
+                /* 不是 canvas 部分的计时器 */
+                controller.startTime = new Date();
+                /* 真正的游戏计时器 */
+                $(document).on('touchstart', function () {
+                    star.jump();
+                });
+                stage.run();
+                pub.run = true;
+                pub.isStart = true;
+            }
+        });
+    }, 1000);
     /*
      *   触发游戏开始的
+     *   为了避免一开始的时候卡 然后就延时执行
      * */
     $("#pause").on('touchstart', () => {
         if (pub.run) {
@@ -968,7 +971,10 @@ $(document).ready(() => {
         }
     });
     $("#gohome").on('touchstart', () => {
-       window.location.href = './index.html';
+        window.location.href = './index.html';
+    });
+    $("#share").on('touchstart', () => {
+        alert('点击右上角分享到朋友圈');
     });
     $("#resume").on('touchstart', () => {
         $("#cover").removeClass("cover-show");

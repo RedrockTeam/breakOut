@@ -92,6 +92,16 @@ $(document).ready(() => {
         *   其实排序的时候就提交了数据
         *   然后这个是否提交就是看有没有参与资格?
         * */
+        let text = $("#phone").val().trim();
+        let reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+
+        $("#phone").val("");
+
+        if (reg.test(text)) {
+            document.querySelector("#phone").setAttribute('placeholder', '提交中 请稍等');
+        } else {
+            document.querySelector("#phone").setAttribute('placeholder', '请输入正确的手机号');
+        }
     });
 
 
