@@ -80,9 +80,6 @@ $(document).ready(() => {
 
     judgeBanner(score);
 
-    $btn_again.on('touchstart', () => {
-        window.location.href = './refresh.html';
-    });
     $btn_submit.on('touchstart', () => {
         $("#cover").addClass("cover-show");
     });

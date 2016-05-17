@@ -1,3 +1,7 @@
+/*
+*   最起码都要 25 秒才能完成整个游戏
+* */
+
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
 
@@ -99,7 +103,7 @@ $(document).ready(() => {
             [800, 1200],
             [1200, 1600],
             [1600, 1900],
-            [1900, 2500]
+            [1900, 3000]
         ],
         judgeRender () {
             let rolled = this.rolled;
@@ -164,7 +168,7 @@ $(document).ready(() => {
              * */
         },
         isWin (star, finish) {
-            if (star.top <= finish.top + finish.height) {
+            if (star.top <= finish.top + finish.height - 30) {
                 this.gameOver();
             }
         }
@@ -821,10 +825,10 @@ $(document).ready(() => {
      *       sign_eight: 关卡标志
      * */
     const sign_finish = new Sign({
-        left: 50,
+        left: 110,
         top: winHeight - 3000,
-        width: 200,
-        height: 50,
+        width: 100,
+        height: 47,
         img: document.querySelector("#img-finish")
     });
     /*
@@ -842,59 +846,59 @@ $(document).ready(() => {
             'barrier_one_tr.move()',
             'barrier_one_tl.move()',
             'sign_one.paint()',
-            'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
-            'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
+            //'star.collision(barrier_one_bl.testPoint, barrier_one_bl.isClose, 10)',
+            //'star.collision(barrier_one_tl.testPoint, barrier_one_tl.isClose, 10)'
         ],
 
         [
             'barrier_two_b.move()',
             'barrier_two_t.move()',
             'sign_two.paint()',
-            'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 20)',
-            'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 20)'
+            //'star.collision(barrier_two_b.testPoint, barrier_two_b.isClose, 20)',
+            //'star.collision(barrier_two_t.testPoint, barrier_two_t.isClose, 20)'
         ],
 
         [
             'barrier_three.rotate()',
             'sign_three.paint()',
-            'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
-            'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
+            //'star.collision(barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22)',
+            //'star.collision(barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22)'
         ],
 
         [
             'barrier_four.rotate()',
             'sign_four.paint()',
-            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
-            'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20)'
+            //'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
+            //'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20)'
         ],
 
         [
             'barrier_five.rotate()',
             'sign_five.paint()',
-            'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24)',
-            'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 24)'
+            //'star.collision(barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24)',
+            //'star.collision(barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 24)'
         ],
 
         [
             'barrier_six.rotate()',
             'sign_six.paint()',
-            'star.collision(barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 20)',
-            'star.collision(barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 20)'
+            //'star.collision(barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 20)',
+            //'star.collision(barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 20)'
         ],
 
         [
             'barrier_seven_mountain.move()',
             'barrier_seven_grass.move()',
             'sign_seven.paint()',
-            'star.collision(barrier_seven_mountain.testPoint, barrier_seven_mountain.isClose, 18)',
-            'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
+            //'star.collision(barrier_seven_mountain.testPoint, barrier_seven_mountain.isClose, 18)',
+            //'star.collision(barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18)'
         ],
 
         [
             'barrier_eight.rotate()',
             'sign_eight.paint()',
-            'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 20)',
-            'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 20)'
+            //'star.collision(barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 20)',
+            //'star.collision(barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 20)'
         ],
 
         [
@@ -962,9 +966,6 @@ $(document).ready(() => {
 
             console.log(controller.totalTime);
         }
-    });
-    $("#restart").on('touchstart', () => {
-        window.location.href = './refresh.html';
     });
     $("#resume").on('touchstart', () => {
         $("#cover").removeClass("cover-show");
