@@ -4,12 +4,16 @@ $(document).ready(() => {
             score,
             minute,
             second,
-            mesc
+            mesc,
+            rank,
+            total
         ] = [
             localStorage.breakOut_score,
             localStorage.breakOut_minute,
             localStorage.breakOut_second,
-            localStorage.breakOut_msec
+            localStorage.breakOut_msec,
+            localStorage.breakOut_rank,
+            localStorage.breakOut_total
         ].map(item => {return parseInt(item)});
     /*
     *   因为 localStorage 存的是字符串
@@ -31,6 +35,12 @@ $(document).ready(() => {
     *       $time: 显示秒数的 dom 元素
     *       $title: 显示当前关卡的 dom 元素
     * */
+
+    $("#range").text(rank);
+    /*
+    *   显示排名
+    * */
+
 
     function returnTimeStr (min, sec, mes) {
         let arr = [].map.call(arguments, item => {
@@ -94,10 +104,21 @@ $(document).ready(() => {
         * */
         let text = $("#phone").val().trim();
         let reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+        let data = {};
+
+        data = {
+            'phone': '',
+            'barrier': score,
+            'use_time': total
+        };
+        /*
+        *   然后需要发请求
+        * */
 
         $("#phone").val("");
 
         if (reg.test(text)) {
+
             document.querySelector("#phone").setAttribute('placeholder', '提交中 请稍等');
         } else {
             document.querySelector("#phone").setAttribute('placeholder', '请输入正确的手机号');

@@ -138,6 +138,9 @@ $(document).ready(() => {
             window.clearInterval(this.timer);
         },
         gameOver () {
+
+            let data = {};
+
             controller.totalTime += new Date() - controller.startTime;
 
             console.log("Total time is: " +
@@ -147,13 +150,13 @@ $(document).ready(() => {
             console.log("Current level: " + pub.currentLevel);
 
             this.stopTimer();
-            //controller.stopTimer();
             console.log("Game over");
 
             localStorage.breakOut_score = pub.currentLevel;
             localStorage.breakOut_minute = parseInt(controller.totalTime/60000);
             localStorage.breakOut_second = parseInt((controller.totalTime%60000)/1000);
             localStorage.breakOut_msec = parseInt(controller.totalTime%60000%1000/10);
+            localStorage.breakOut_total = parseInt(controller.totalTime);
             /*
              *   因为结果页面有跳转, 所以用 localStorage 暂存一下数据
              *   @params:
@@ -162,8 +165,29 @@ $(document).ready(() => {
              *       localStorage.breakOut_msec: 毫秒
              * */
 
-            window.location.href = './result.html';
+            data = {
+                'phone': '13000000000',
+                'barrier': pub.currentLevel,
+                'use_time': controller.totalTime
+            };
+
+            //$.ajax({
+            //    'url': 'http://localhost/puzzle/index.php/Home/BreakOut/submitScore',
+            //    'data': JSON.stringify(data),
+            //    'type': 'POST',
+            //    'contentType': 'application/json',
+            //    success (data) {
+            //        localStorage.breakOut_rank = data.msg;
+            //        window.location.href = './result.html';
+            //    },
+            //    error (err) {
+            //        console.log("error");
+            //        console.log(err);
+            //    }
+            //});
+
             /*
+             *   ajax 用来传分数
              *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
              * */
         },
@@ -246,7 +270,7 @@ $(document).ready(() => {
 
                 pub.judgeLevel();
 
-                console.log(pub.rolled);
+                //console.log(pub.rolled);
                 //console.log(star.top);
                 //console.log(pub.barrierHeightArr);
             }, 1000/60);
@@ -967,7 +991,7 @@ $(document).ready(() => {
             controller.stopTimer();
             $("#cover").addClass("cover-show");
 
-            console.log(controller.totalTime);
+            //console.log(controller.totalTime);
         }
     });
     $("#gohome").on('touchstart', () => {
