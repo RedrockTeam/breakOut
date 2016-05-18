@@ -934,6 +934,8 @@ $(document).ready(() => {
      *   gameController
      *   二维数组, 第一维的每个元素代表关卡
      *   整个游戏运行所依赖的函数, 运行的时候从这里面取来...eval
+     *
+     *   暂时没有想到更好的方法 使用 bind apply new Function 都会报错
      * */
 
     stage.refresh();
