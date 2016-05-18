@@ -26,6 +26,7 @@ $(document).ready(() => {
     const $btn_submit = $("#submit");
     const $btn_tel_back = $("#tel-back");
     const $btn_tel_submit = $("#tel-submit");
+    const $cover = $("#cover");
     /*
     *   @params
     *       score: 当前关卡
@@ -90,11 +91,19 @@ $(document).ready(() => {
     judgeBanner(score);
 
     $btn_submit.on('touchstart', () => {
-        $("#cover").addClass("cover-show");
+        $cover.addClass("cover-show");
+        $cover.height(window.innerHeight);
     });
     $btn_tel_back.on('touchstart', () => {
-        $("#cover").removeClass("cover-show");
+        $cover.removeClass("cover-show");
+        $cover.height(window.innerHeight);
     });
+    $cover.on('touchmove', (e) => {
+        e.preventDefault();
+    });
+    /*
+    *   改了一下逻辑 避免安卓机输入法弹起的时候显示问题
+    * */
     $btn_tel_submit.on('touchstart', () => {
         /*
         *   正则判断手机号

@@ -965,29 +965,34 @@ $(document).ready(() => {
 
     /* 在 refresh 之后延时加载, 避免被擦掉, 只用画第一关, 其他的画了也看不到 */
 
-    window.setTimeout(() => {
-        $("#container").on("touchstart", function () {
-            if (pub.run === false) {
-                window.clearInterval(pub.touchTimer);
-                /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
-                controller.timer = window.setInterval(() => {
-                    gameTimer.run();
-                    $gameTimer.text(gameTimer.getTime());
-                }, 50);
-                /* 不是 canvas 部分的计时器 */
-                controller.startTime = new Date();
-                /* 真正的游戏计时器 */
-                $(document).on('touchstart', function () {
-                    star.jump();
+    document.addEventListener('readystatechange', () => {
+        if (document.readyState === "complete") {
+            window.setTimeout(() => {
+                $("#container").on("touchstart", function () {
+                    if (pub.run === false) {
+                        window.clearInterval(pub.touchTimer);
+                        /* 不让那小手那一块儿闪了, 跟着整个画布一起刷新 */
+                        controller.timer = window.setInterval(() => {
+                            gameTimer.run();
+                            $gameTimer.text(gameTimer.getTime());
+                        }, 50);
+                        /* 不是 canvas 部分的计时器 */
+                        controller.startTime = new Date();
+                        /* 真正的游戏计时器 */
+                        $(document).on('touchstart', function () {
+                            star.jump();
+                        });
+                        stage.run();
+                        pub.run = true;
+                        pub.isStart = true;
+                    }
                 });
-                stage.run();
-                pub.run = true;
-                pub.isStart = true;
-            }
-        });
-    }, 1000);
+            }, 500);
+        }
+    });
     /*
      *   触发游戏开始的
+     *   等资源加载完之后可以玩
      *   为了避免一开始的时候卡 然后就延时执行
      * */
     $("#pause").on('touchstart', () => {
