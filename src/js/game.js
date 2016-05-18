@@ -259,6 +259,9 @@ $(document).ready(() => {
 
                 for (let i = pub.renderBarrier[0]; i <= pub.renderBarrier[1]; i++) {
                     gameController[i].forEach(item => eval(item));
+                    //gameController[i].forEach(item => {
+                    //    item.func.apply(item.obj, item.args);
+                    //});
                 }
 
                 /*
@@ -930,12 +933,231 @@ $(document).ready(() => {
             'pub.isWin(star, sign_finish)'
         ]
     ];
+    //let gameController = [
+    //    [
+    //        {
+    //            obj: touch,
+    //            func: touch.blink,
+    //            args: null
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_one_bl,
+    //            func: barrier_one_bl.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: barrier_one_br,
+    //            func: barrier_one_br.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: barrier_one_tr,
+    //            func: barrier_one_tr.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: barrier_one_tl,
+    //            func: barrier_one_tl.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_one,
+    //            func: sign_one.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_one_bl.testPoint, barrier_one_bl.isClose, 10]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_one_tl.testPoint, barrier_one_tl.isClose, 10]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_two_b,
+    //            func: barrier_two_b.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: barrier_two_t,
+    //            func: barrier_two_t.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_two,
+    //            func: sign_two.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_two_b.testPoint, barrier_two_b.isClose, 21]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_two_t.testPoint, barrier_two_t.isClose, 21]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_three,
+    //            func: sign_three.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_three,
+    //            func: sign_three.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_three.testPoint.down.y, barrier_three.testPoint.down.status, 22]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_three.testPoint.up.y, barrier_three.testPoint.up.status, 22]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_four,
+    //            func: sign_four.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_four,
+    //            func: sign_four.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_five,
+    //            func: sign_five.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_five,
+    //            func: sign_five.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_five.testPoint.down.y, barrier_five.testPoint.down.status, 24]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_five.testPoint.up.y, barrier_five.testPoint.up.status, 20]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_six,
+    //            func: sign_six.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_six,
+    //            func: sign_six.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_six.testPoint.down.y, barrier_six.testPoint.down.status, 20]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_six.testPoint.up.y, barrier_six.testPoint.up.status, 20]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_seven_mountain,
+    //            func: barrier_seven_mountain.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: barrier_seven_grass,
+    //            func: barrier_seven_grass.move,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_seven_mountain.testPoint, barrier_seven_mountain.isClose, 18]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_seven_grass.testPoint, barrier_seven_grass.isClose, 18]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: barrier_eight,
+    //            func: sign_eight.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: sign_eight,
+    //            func: sign_eight.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_eight.testPoint.down.y, barrier_eight.testPoint.down.status, 20]
+    //        },
+    //        {
+    //            obj: star,
+    //            func: star.collision,
+    //            args: [barrier_eight.testPoint.up.y, barrier_eight.testPoint.up.status, 20]
+    //        }
+    //    ],
+    //    [
+    //        {
+    //            obj: sign_finish,
+    //            func: sign_finish.paint,
+    //            args: null
+    //        },
+    //        {
+    //            obj: pub,
+    //            func: pub.isWin,
+    //            args: [star, sign_finish]
+    //        }
+    //    ]
+    //
+    //];
     /*
      *   gameController
      *   二维数组, 第一维的每个元素代表关卡
      *   整个游戏运行所依赖的函数, 运行的时候从这里面取来...eval
      *
      *   暂时没有想到更好的方法 使用 bind apply new Function 都会报错
+     *   使用 apply 传的值居然是瞬时值...
      * */
 
     stage.refresh();
