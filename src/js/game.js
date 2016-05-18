@@ -186,6 +186,8 @@ $(document).ready(() => {
             //    }
             //});
 
+            window.location.href = './result.html';
+
             /*
              *   ajax 用来传分数
              *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
