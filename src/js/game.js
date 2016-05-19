@@ -1,7 +1,3 @@
-/*
-*   最起码都要 25 秒才能完成整个游戏
-* */
-
 $(window).on('scroll.elasticity',function (e){e.preventDefault();}).on('touchmove.elasticity',function(e){e.preventDefault();});
 /* 禁掉 webview 的拖动 */
 
@@ -553,7 +549,13 @@ $(document).ready(() => {
      * */
 
     function randomCircleSpeed () {
-        let arr = [0.02, 0.025, 0.03, 0.035, 0.04];
+        let arr = [0.02, 0.025, 0.03, 0.035];
+        let len = arr.length;
+
+        return arr[Math.floor(Math.random()*len)];
+    }
+    function randomCircleSlowSpeed () {
+        let arr = [0.01, 0.015, 0.02];
         let len = arr.length;
 
         return arr[Math.floor(Math.random()*len)];
@@ -726,7 +728,7 @@ $(document).ready(() => {
         height: 250,
         img: document.querySelector("#img-circle-4"),
         rotateDegree: 0,
-        rotateSpeed: randomCircleSpeed() - .01,
+        rotateSpeed: randomCircleSlowSpeed(),
         zoneUp: [[0.5, 1], [2.1, 2.6], [3.7, 4.2], [5.1, 5.7]],
         zoneDown: [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]
     });
@@ -1011,7 +1013,7 @@ $(document).ready(() => {
         window.location.href = './index.html';
     });
     $("#share").on('touchstart', () => {
-        alert('点击右上角分享到朋友圈');
+        $(".share-text").addClass("show");
     });
     $("#resume").on('touchstart', () => {
         $("#cover").removeClass("cover-show");
