@@ -91,19 +91,19 @@ $(document).ready(() => {
             winHeight - 500 - 15,
             winHeight - 800 - 15,
             winHeight - 1200 - 15,
-            winHeight - 1550 - 15,
-            winHeight - 1900 - 15,
-            winHeight - 2300 - 15,
-            winHeight - 2500 - 15,
-            winHeight - 2800 - 15
+            winHeight - 1650 - 15,
+            winHeight - 2050 - 15,
+            winHeight - 2400 - 15,
+            winHeight - 2700 - 15,
+            winHeight - 3000 - 15
         ],
         judgeRenderArr: [
             [150, 510],
             [510, 800],
-            [800, 1200],
-            [1200, 1600],
-            [1600, 1900],
-            [1900, 3000]
+            [800, 1250],
+            [1250, 1650],
+            [1650, 2050],
+            [2050, 3200]
         ],
         judgeRender () {
             let rolled = this.rolled;
@@ -559,7 +559,7 @@ $(document).ready(() => {
         return arr[Math.floor(Math.random()*len)];
     }
     function randomBlockSpeed () {
-        let arr = [1.5, 1.7, 1.8, 2, 2.2, 2.5, 3];
+        let arr = [1.5, 1.6, 1.7, 1.7, 1.8, 2, 2.2, 2.3];
         let len = arr.length;
 
         return arr[Math.floor(Math.random()*len)];
@@ -720,19 +720,19 @@ $(document).ready(() => {
      *       sign_three: 关卡标志
      * */
     const barrier_four = new Circle({
-        x: 60,
-        y: winHeight - 1550,
-        width: 200,
-        height: 200,
+        x: 35,
+        y: winHeight - 1650,
+        width: 250,
+        height: 250,
         img: document.querySelector("#img-circle-4"),
         rotateDegree: 0,
         rotateSpeed: randomCircleSpeed() - .01,
-        zoneUp: [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]],
+        zoneUp: [[0.5, 1], [2.1, 2.6], [3.7, 4.2], [5.1, 5.7]],
         zoneDown: [[0.5, 1], [2.1, 2.6], [3.6, 4.2], [5.1, 5.7]]
     });
     const sign_four = new Sign({
         left: 130,
-        top: winHeight - 1450,
+        top: winHeight - 1525,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-4")
@@ -745,7 +745,7 @@ $(document).ready(() => {
      * */
     const barrier_five = new Circle({
         x: 60,
-        y: winHeight - 1900,
+        y: winHeight - 2050,
         width: 200,
         height: 200,
         img: document.querySelector("#img-circle-3"),
@@ -756,7 +756,7 @@ $(document).ready(() => {
     });
     const sign_five = new Sign({
         left: 120,
-        top: winHeight - 1800,
+        top: winHeight - 1950,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-5")
@@ -769,7 +769,7 @@ $(document).ready(() => {
      * */
     const barrier_six = new Circle({
         x: 88,
-        y: winHeight - 2300,
+        y: winHeight - 2400,
         width: 144,
         height: 200,
         img: document.querySelector("#img-circle-2"),
@@ -780,7 +780,7 @@ $(document).ready(() => {
     });
     const sign_six = new Sign({
         left: 85,
-        top: winHeight - 2200,
+        top: winHeight - 2300,
         width: 100,
         height: 13,
         img: document.querySelector("#img-title-6")
@@ -793,7 +793,7 @@ $(document).ready(() => {
      * */
     const barrier_seven_mountain = new Block({
         left: 220,
-        top: winHeight - 2400,
+        top: winHeight - 2600,
         width: 100,
         height: 21,
         img: document.querySelector("#img-mountain"),
@@ -805,7 +805,7 @@ $(document).ready(() => {
     });
     const barrier_seven_grass = new Block({
         left: 0,
-        top: winHeight - 2500,
+        top: winHeight - 2700,
         width: 100,
         height: 21,
         img: document.querySelector("#img-grass"),
@@ -817,7 +817,7 @@ $(document).ready(() => {
     });
     const sign_seven = new Sign({
         left: 100,
-        top: winHeight - 2450,
+        top: winHeight - 2650,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-7")
@@ -831,7 +831,7 @@ $(document).ready(() => {
      * */
     const barrier_eight = new Circle({
         x: 85,
-        y: winHeight - 2800,
+        y: winHeight - 3000,
         width: 150,
         height: 150,
         img: document.querySelector("#img-circle-1"),
@@ -842,7 +842,7 @@ $(document).ready(() => {
     });
     const sign_eight = new Sign({
         left: 125,
-        top: winHeight - 2725,
+        top: winHeight - 2925,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-8")
@@ -855,7 +855,7 @@ $(document).ready(() => {
      * */
     const sign_finish = new Sign({
         left: 110,
-        top: winHeight - 3000,
+        top: winHeight - 3200,
         width: 100,
         height: 47,
         img: document.querySelector("#img-finish")
@@ -897,7 +897,7 @@ $(document).ready(() => {
         [
             'barrier_four.rotate()',
             'sign_four.paint()',
-            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 24)',
+            'star.collision(barrier_four.testPoint.down.y, barrier_four.testPoint.down.status, 20)',
             'star.collision(barrier_four.testPoint.up.y, barrier_four.testPoint.up.status, 20)'
         ],
 
