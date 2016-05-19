@@ -7,6 +7,10 @@
                 document.querySelector("#start").className += " start-after";
                 document.querySelector("#intro").className += " intro-after";
                 document.querySelector("#redrock").className += " redrock-after";
+                //alert(document.height);
+                //alert(window.innerHeight);
+                //alert(window.screen.availHeight);
+                //document.height = window.innerHeight;
             }, 1000);
         }
     });
@@ -15,5 +19,8 @@
     });
     document.querySelector("#intro").addEventListener('touchstart', () => {
         window.location.href = './intro.html';
+    });
+    document.addEventListener('touchmove', (e) => {
+        e.preventDefault();
     });
 })();
