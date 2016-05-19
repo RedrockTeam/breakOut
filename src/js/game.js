@@ -659,7 +659,7 @@ $(document).ready(() => {
      * */
     const barrier_two_b = new Block({
         left: 0,
-        top: winHeight - 700,
+        top: winHeight - 650,
         width: 100,
         height: 18,
         img: document.querySelector("#img-water-1"),
@@ -683,7 +683,7 @@ $(document).ready(() => {
     });
     const sign_two = new Sign({
         left: 130,
-        top: winHeight - 750,
+        top: winHeight - 725,
         width: 80,
         height: 13,
         img: document.querySelector("#img-title-2")
