@@ -84,14 +84,14 @@ $(document).ready(() => {
         rolled: 0,
         renderBarrier: [0, 3],
         barrierHeightArr: [
-            winHeight - 500 - 15,
-            winHeight - 800 - 15,
-            winHeight - 1200 - 15,
-            winHeight - 1650 - 15,
-            winHeight - 2050 - 15,
-            winHeight - 2400 - 15,
-            winHeight - 2700 - 15,
-            winHeight - 3000 - 15
+            winHeight - 500 - 20,
+            winHeight - 800 - 20,
+            winHeight - 1200 - 20,
+            winHeight - 1650 - 20,
+            winHeight - 2050 - 20,
+            winHeight - 2400 - 20,
+            winHeight - 2700 - 20,
+            winHeight - 3000 - 20
         ],
         judgeRenderArr: [
             [150, 510],
@@ -249,7 +249,12 @@ $(document).ready(() => {
 
                 stage.refresh();
 
-                stage.up(star.getPos()[1]);
+                if (pub.rolled < 2800) {
+                    stage.up(star.getPos()[1]);
+                }
+                /*
+                *   最后一关过了冲刺重点的时候画布就不动了
+                * */
 
                 star.getHighestPos();
 
@@ -857,7 +862,7 @@ $(document).ready(() => {
      * */
     const sign_finish = new Sign({
         left: 110,
-        top: winHeight - 3200,
+        top: winHeight - 3270,
         width: 100,
         height: 47,
         img: document.querySelector("#img-finish")
@@ -989,7 +994,7 @@ $(document).ready(() => {
                         pub.isStart = true;
                     }
                 });
-            }, 500);
+            }, 1000);
         }
     });
     /*
