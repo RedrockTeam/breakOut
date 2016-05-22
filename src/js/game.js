@@ -167,26 +167,26 @@ $(document).ready(() => {
                 'use_time': controller.totalTime
             };
 
-            //$.ajax({
-            //    'url': 'http://localhost/puzzle/index.php/Home/BreakOut/submitScore',
-            //    'data': JSON.stringify(data),
-            //    'type': 'POST',
-            //    'contentType': 'application/json',
-            //    success (data) {
-            //        localStorage.breakOut_rank = data.msg;
-            //        window.location.href = './result.html';
-            //    },
-            //    error (err) {
-            //        console.log("error");
-            //        console.log(err);
-            //    }
-            //});
+            $.ajax({
+                'url': 'http://localhost/puzzle/index.php/Home/BreakOut/submitScore',
+                'data': JSON.stringify(data),
+                'type': 'POST',
+                'contentType': 'application/json',
+                success (data) {
+                    localStorage.breakOut_rank = data.msg;
+                    window.location.href = './result.html';
+                },
+                error (err) {
+                    console.log("error");
+                    console.log(err);
+                }
+            });
 
             window.location.href = './result.html';
 
             /*
              *   ajax 用来传分数
-             *   根据关卡的不同来看吧,需不需要另外开一个页面, 或者是把 currentLevel 加到 9
+             *   currentLevel 0-8
              * */
         },
         isWin (star, finish) {
