@@ -162,19 +162,16 @@ $(document).ready(() => {
              * */
 
             data = {
-                'phone': '13000000000',
                 'barrier': pub.currentLevel,
                 'use_time': controller.totalTime
             };
 
             $.ajax({
-                'url': 'http://localhost/puzzle/index.php/Home/BreakOut/submitScore',
+                'url': 'http://hongyan.cqupt.edu.cn/puzzle/index.php/Home/BreakOut/getRank',
                 'data': JSON.stringify(data),
                 'type': 'POST',
-                'contentType': 'application/json',
                 success (data) {
                     localStorage.breakOut_rank = data.msg;
-                    window.location.href = './result.html';
                 },
                 error (err) {
                     console.log("error");
@@ -183,6 +180,7 @@ $(document).ready(() => {
             });
 
             window.location.href = './result.html';
+
 
             /*
              *   ajax 用来传分数
