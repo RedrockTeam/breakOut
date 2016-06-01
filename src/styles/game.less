@@ -42,9 +42,6 @@ body{
     right: 1rem;
     display: none;
   }
-  .show {
-    display: block;
-  }
   .block {
     position: relative;
     width: 80%;
@@ -54,6 +51,9 @@ body{
     border: 6px solid #fc9b1e;
     border-radius: 20px;
     text-align: center;
+  }
+  .block-submit {
+    display: none;
   }
   .pause-title {
     width: 60%;
@@ -86,9 +86,23 @@ body{
     background: url(../imgs/game-share.png) no-repeat;
     background-size: 100%;
   }
+  .cover-wait {
+    margin-top: 15rem;
+    font-size: 1.2rem;
+    color: #fff;
+    text-align: center;
+    display: none;
+  }
+  .show {
+    display: block;
+  }
 }
 
 .cover-show {
+  transform: translate3d(0, 0, 0);
+}
+.cover-over {
+  transition: transform .5s;
   transform: translate3d(0, 0, 0);
 }
 
